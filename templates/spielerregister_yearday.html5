@@ -1,0 +1,52 @@
+<div class="<?php echo $this->class; ?> block"<?php echo $this->cssID; ?><?php if ($this->style): ?> style="<?php echo $this->style; ?>"<?php endif; ?>>
+
+<?php 
+// Jahrestagart ausgeben
+echo '<h2>';
+if($this->alter && $this->typ == 'birthday') echo $this->alter . '. Geburtstag';
+if($this->alter && $this->typ == 'deathday') echo $this->alter . '. Todestag';
+echo '</h2>';
+
+echo '<div class="biographie">';
+
+// Bild ausgeben
+if($this->bild)
+{
+	echo '<figure>';
+	echo '<img src="' . $this->bild . '" />';
+	echo '</figure>';
+}
+
+// Spielername ausgeben
+echo '<div class="spielername">';
+if($this->wikipedia)
+{
+	echo '<a href="http://de.wikipedia.org/wiki/' . $this->wikipedia . '" target="_blank"><img src="system/modules/spielerregister/assets/images/wikipedia.png" /></a> ';
+}
+echo $this->vorname . ' ';
+echo $this->nachname;
+if($this->verstorben) echo ' (&dagger;)';
+echo '</div>';
+
+// Lebensdaten ausgeben
+echo '<div class="lebensdaten">';
+if($this->typ == 'birthday') echo '<span class="jahrestag">* ' . $this->geburtstag . '</span>';
+else echo '* ' . $this->geburtstag;
+if($this->typ == 'deathday') echo '; <span class="jahrestag">&dagger; ' . $this->todestag . '</span>';
+elseif($this->verstorben) echo '; &dagger; ' . $this->todestag;
+echo '</div>';
+
+// Kurzinfo ausgeben
+if($this->kurzinfo)
+{
+	echo '<div class="kurzinfo">';
+	echo $this->kurzinfo;
+	echo '</div>';
+}
+
+echo '</div>';
+
+?>
+
+<p class="portalboxlink"><a href="persoenlichkeiten.html">Mehr Jahrestage</a></p>
+</div>

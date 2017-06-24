@@ -1,0 +1,10 @@
+<?php $this->showTemplateVars(); ?>
+
+<div class="<?php echo $this->class; ?> block"<?php echo $this->cssID; ?><?php if ($this->style): ?> style="<?php echo $this->style; ?>"<?php endif; ?>>
+
+	<form action="" id="spielerregister_suche" method="get">
+		<input type="text" name="s" class="text" value="">
+		<input type="submit" class="submit" value="Suchen">
+	</form>
+  
+</div> 

@@ -1,0 +1,66 @@
+<?php //$this->showTemplateVars(); ?>
+
+<div id="spielerregister">
+
+<?php 
+$altdatum = '';
+for($i=0;$i<$this->Anzahl;$i++)
+{
+
+	// Tag ausgeben, wenn nötig
+	if($altdatum != $this->Ausgabe['monatstag'][$i])
+	{
+		$altdatum = $this->Ausgabe['monatstag'][$i];
+		echo '<h2 class="tag">' . $this->Ausgabe['monatstag'][$i] . '</h2>';
+	}
+
+	// Container ausgeben
+	echo '<div class="biographie bedeutung' . $this->Ausgabe['bedeutung'][$i] . '">';
+
+	// Bild ausgeben
+	if($this->Ausgabe['bild'][$i])
+	{
+		echo '<figure>';
+		echo '<img src="' . $this->Ausgabe['bild'][$i] . '" />';
+		echo '</figure>';
+	}
+
+	// Spielername ausgeben
+	echo '<h3 class="spielername">';
+	if($this->Ausgabe['wikipedia'][$i])
+	{
+		echo '<a href="http://de.wikipedia.org/wiki/' . $this->Ausgabe['wikipedia'][$i] . '" target="_blank"><img src="system/modules/spielerregister/assets/images/wikipedia.png" /></a> ';
+	}
+	echo '<a href="'. $this->Ausgabe['spielerlink'][$i] .'">' . $this->Ausgabe['vorname'][$i] . ' ';
+	echo $this->Ausgabe['nachname'][$i] . '</a>';
+	if($this->Ausgabe['verstorben'][$i]) echo ' (&dagger;)';
+	echo '</h3>';
+	
+	// Lebensdaten ausgeben
+	// echo '<div class="lebensdaten">';
+	// if($this->Ausgabe['typ'][$i] == 'birthday') echo '<span class="jahrestag">* ' . $this->Ausgabe['geburtstag'][$i] . '</span>';
+	// else echo '* ' . $this->Ausgabe['geburtstag'][$i];
+	// if($this->Ausgabe['typ'][$i] == 'deathday') echo '; <span class="jahrestag">&dagger; ' . $this->Ausgabe['todestag'][$i] . '</span>';
+	// elseif($this->Ausgabe['verstorben'][$i]) echo '; &dagger; ' . $this->Ausgabe['todestag'][$i];
+	// echo '</div>';
+	
+	// Jahrestagart ausgeben
+	echo '<div class="jahrestagart">';
+	if($this->Ausgabe['alter'][$i] && $this->Ausgabe['typ'][$i] == 'birthday') echo $this->Ausgabe['alter'][$i] . '. Geburtstag';
+	if($this->Ausgabe['alter'][$i] && $this->Ausgabe['typ'][$i] == 'deathday') echo $this->Ausgabe['alter'][$i] . '. Todestag';
+	echo '</div>';
+
+	// Kurzinfo ausgeben
+	if($this->Ausgabe['kurzinfo'][$i])
+	{
+		echo '<div class="kurzinfo">';
+		echo $this->Ausgabe['kurzinfo'][$i];
+		echo '</div>';
+	}
+
+	// Container beenden
+	echo '</div>';
+}
+
+?>
+</div>

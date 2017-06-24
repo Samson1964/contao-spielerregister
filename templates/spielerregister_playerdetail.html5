@@ -1,0 +1,63 @@
+<?php //$this->showTemplateVars(); ?>
+
+<div class="<?php echo $this->class; ?> block"<?php echo $this->cssID; ?><?php if ($this->style): ?> style="<?php echo $this->style; ?>"<?php endif; ?>>
+	
+	<div class="suchformular">
+		<form action="" method="get">
+			<input type="text" name="psearch" class="text" value="">
+			<input type="submit" class="submit" value="Suchen">
+		</form>
+	</div>
+
+	<?php if ($this->sucheaktiv && !$this->suchfehler): ?>
+		<div class="trefferliste">
+			<p>Sie suchten nach "<i><?php echo $this->suchbegriff; ?></i>". Es wurden <?php echo $this->suchtreffer; ?> Personen gefunden:</p>
+			<ul>
+			<?php foreach($this->suchergebnis as $liste): ?>
+				<li><a href="<?php echo $liste['link']; ?>"><?php echo $liste['name']; ?></a> (<?php echo $liste['lebensdaten']; ?>)</li>
+			<?php endforeach; ?>
+			</ul>
+		</div>
+	<?php elseif ($this->sucheaktiv && $this->suchfehler): ?>
+		<div class="trefferliste error">
+			<?php echo $this->suchfehler; ?>
+		</div>
+	<?php endif; ?>
+
+	<h1><?php echo $this->name; ?></h1>
+
+	<div class="lebensdaten">
+		<?php echo $this->lebensdaten; ?>
+	</div>
+
+	<?php if ($this->bildoriginal): ?>
+		<figure class="image_container float_left" style="width:<?php echo $this->bildbreite; ?>px">
+	
+			<a href="<?php echo $this->bildoriginal; ?>" data-lightbox="player_<?php echo $this->id; ?>">
+			<img src="<?php echo $this->bildvorschau; ?>" width="<?php echo $this->bildbreite; ?>" alt="<?php echo $this->bildtitel; ?>" title="<?php echo $this->bildtitel; ?>">
+			</a>
+	
+			<?php if ($this->caption): ?>
+				<figcaption class="caption" style="width:<?php echo $this->bildbreite; ?>px"><?php echo $this->caption; ?></figcaption>
+			<?php endif; ?>
+	
+		</figure>
+	<?php endif; ?>
+
+	<?php if ($this->wikipedia): ?>
+		<a href="http://de.wikipedia.org/wiki/<?php echo $this->wikipedia; ?>" target="_blank"><img src="system/modules/spielerregister/assets/images/wikipedia.png" /></a>
+	<?php endif; ?>
+
+	<?php if ($this->kurzinfo): ?>
+		<div class="kurzinfo">
+			<?php echo $this->kurzinfo; ?>
+		</div>
+	<?php endif; ?>
+
+	<?php if ($this->langinfo): ?>
+		<div class="langinfo">
+			<?php echo $this->langinfo; ?>
+		</div>
+	<?php endif; ?>
+
+</div> 
