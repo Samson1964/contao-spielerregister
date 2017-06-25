@@ -15,6 +15,8 @@
 $GLOBALS['TL_DCA']['tl_module']['palettes']['spielerregister_yeardaylist'] = '{title_legend},name,type;{options_legend},spielerregister_jumpTo,spielerregister_level,spielerregister_image,spielerregister_lastday;{expert_legend:hide},cssID,align,space';
 $GLOBALS['TL_DCA']['tl_module']['palettes']['spielerregister_yearday'] = '{title_legend},name,type;{options_legend},spielerregister_jumpTo,spielerregister_level,spielerregister_image;{expert_legend:hide},cssID,align,space';
 $GLOBALS['TL_DCA']['tl_module']['palettes']['spielerregister_playerdetail'] = '{title_legend},name,type;{options_legend},spielerregister_jumpTo;{expert_legend:hide},cssID,align,space';
+$GLOBALS['TL_DCA']['tl_module']['palettes']['spielerregister_honorlist'] = '{title_legend},name,headline,type;{options_legend},spielerregister_honorListtype;{expert_legend:hide},cssID,align,space';
+$GLOBALS['TL_DCA']['tl_module']['palettes']['spielerregister_deathlist'] = '{title_legend},name,headline,type;{options_legend},spielerregister_deathlist_months;{expert_legend:hide},cssID,align,space';
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['spielerregister_level'] = array
 (
@@ -61,34 +63,41 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['spielerregister_jumpTo'] = array
 	'relation'         => array('type'=>'belongsTo', 'load'=>'lazy')
 ); 
 		
-/**
- * Class tl_module_fhcounter
- *
- * Provide miscellaneous methods that are used by the data configuration array.
- * @copyright  Leo Feyer 2005-2014
- * @author     Leo Feyer <https://contao.org>
- * @package    Calendar
- */
-class tl_module_spielerregister extends Backend
-{
+$GLOBALS['TL_DCA']['tl_module']['fields']['spielerregister_honorListtype'] = array
+(
+	'label'            => &$GLOBALS['TL_LANG']['tl_module']['spielerregister_honorListtype'],
+	'exclude'          => true,
+	'default'          => 'pr',
+	'inputType'        => 'select',
+	'options'          => array
+	(
+		'pr'           => 'Liste der Ehrenpräsidenten',
+		'me'           => 'Liste der Ehrenmitglieder',
+		'go'           => 'Liste der Träger der Goldenen Ehrennadel',
+		'si'           => 'Liste der Träger der Silbernen Ehrennadel',
+		'gb'           => 'Liste der Träger der Goldenen Ehrenplakette',
+		'sb'           => 'Liste der Träger der Silbernen Ehrenplakette',
+		'le'           => 'Liste der Empfänger des Ehrenbriefes',
+		'pl'           => 'Liste der Empfänger des Ehrentellers',
+		'bm'           => 'Liste der Empfänger der Bundesmedaille'
+	),
+	'eval'             => array('tl_class'=>'w50'),
+	'sql'              => "char(2) NOT NULL default ''"
+);
 
-	/**
-	 * Import the back end user object
-	 */
-	public function __construct()
-	{
-		parent::__construct();
-		$this->import('BackendUser', 'User');
-	}
-
-	/**
-	 * Return all event templates as array
-	 * @return array
-	 */
-	public function getCounterTemplates()
-	{
-		return $this->getTemplateGroup('fhcounter_');
-	}
-
-
-}
+$GLOBALS['TL_DCA']['tl_module']['fields']['spielerregister_deathlist_months'] = array
+(
+	'label'                   => &$GLOBALS['TL_LANG']['tl_module']['spielerregister_deathlist_months'],
+	'exclude'                 => true,
+	'search'                  => true,
+	'sorting'                 => true,
+	'flag'                    => 11,
+	'inputType'               => 'text',
+	'eval'                    => array
+	(
+		'maxlength'           => 2,
+		'tl_class'            => 'w50',
+		'rgxp'                => 'alnum'
+	),
+	'sql'                     => "int(2) unsigned NOT NULL default '12'"
+);

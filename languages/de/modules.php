@@ -25,3 +25,9 @@ $GLOBALS['TL_LANG']['FMD']['spielerregister_yeardaylist'][1] = 'Jahrestagliste a
 
 $GLOBALS['TL_LANG']['FMD']['spielerregister_yearday'][0] = 'Aktueller Jahrestag';
 $GLOBALS['TL_LANG']['FMD']['spielerregister_yearday'][1] = 'Aktuellen Jahrestag anzeigen';
+
+$GLOBALS['TL_LANG']['FMD']['spielerregister_honorlist'][0] = 'Ehrungslisten';
+$GLOBALS['TL_LANG']['FMD']['spielerregister_honorlist'][1] = 'Ehrungslisten anzeigen';
+
+$GLOBALS['TL_LANG']['FMD']['spielerregister_deathlist'][0] = 'Sterbeliste';
+$GLOBALS['TL_LANG']['FMD']['spielerregister_deathlist'][1] = 'Sterbeliste anzeigen';

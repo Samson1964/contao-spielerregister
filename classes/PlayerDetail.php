@@ -25,6 +25,7 @@ class PlayerDetail extends \Module
 
 	var $playerid; // Nimmt die ID des abgefragten Spielers auf
 	var $playersearch; // Hier wird der Suchbegriff gespeichert
+	var $minImportance = 1; // Minimale Relevanz
 	
 	/**
 	 * Display a wildcard in the back end
@@ -64,9 +65,9 @@ class PlayerDetail extends \Module
 		// Weiterleitungsseite ermitteln
 		$jumpTo = \PageModel::findByPk($this->spielerregister_jumpTo);
 		
-		$objRegister = $this->Database->prepare('SELECT * FROM tl_spielerregister WHERE active = 1 AND importance >= 5 AND id = ?')
+		$objRegister = $this->Database->prepare('SELECT * FROM tl_spielerregister WHERE active = 1 AND importance >= ? AND id = ?')
 									  ->limit(1)
-		                              ->execute($this->playerid);
+		                              ->execute($this->minImportance, $this->playerid);
 
 		// Template-Objekt anlegen
 		$this->Template = new \FrontendTemplate('spielerregister_playerdetail');
@@ -83,8 +84,8 @@ class PlayerDetail extends \Module
 			if($suchlaenge > 1)
 			{
 				// Sucht nach Suchbegriff über alle 4 Nachnamenfelder
-				$objSuche = $this->Database->prepare('SELECT * FROM tl_spielerregister WHERE active = 1 AND importance >= 5 AND (surname1 LIKE ? OR surname2 LIKE ? OR surname3 LIKE ? OR surname4 LIKE ?) ORDER BY surname1 ASC')
-										->execute('%'.$this->playersearch.'%', '%'.$this->playersearch.'%', '%'.$this->playersearch.'%', '%'.$this->playersearch.'%');
+				$objSuche = $this->Database->prepare('SELECT * FROM tl_spielerregister WHERE active = 1 AND importance >= ? AND (surname1 LIKE ? OR surname2 LIKE ? OR surname3 LIKE ? OR surname4 LIKE ?) ORDER BY surname1 ASC')
+										->execute($this->minImportance, '%'.$this->playersearch.'%', '%'.$this->playersearch.'%', '%'.$this->playersearch.'%', '%'.$this->playersearch.'%');
 				$this->Template->suchtreffer = $objSuche->numRows;
 				$this->Template->suchbegriff = $this->playersearch;
 				$ergebnisliste = array();
@@ -136,52 +137,100 @@ class PlayerDetail extends \Module
 			$this->Template->wikipedia = $objRegister->wikipedia;
 			$this->Template->kurzinfo = $objRegister->shortinfo;
 			$this->Template->langinfo = $objRegister->langinfo;
-			// Jüngstes Bild laden
-			$objImage = $this->Database->prepare('SELECT * FROM tl_spielerregister_images WHERE pid = ? AND active = 1 ORDER BY imagedate DESC LIMIT 1')
-			                           ->execute($objRegister->id);
-			if($objImage->numRows)
+			$this->Template->chess365_id = $objRegister->chess365_id;
+			$this->Template->chess_id = $objRegister->chess_id;
+			$this->Template->chessgames_id = $objRegister->chessgames_id;
+
+			// Bilder aus multiSRC holen
+			$images = Spielerregister::Bilder($objRegister->multiSRC);
+			if($images) 
 			{
-				$objFile = \FilesModel::findByPk($objImage->singleSRC);
-				$this->Template->bildoriginal = $objFile->path; 
-				$this->Template->bildvorschau = Image::get($objFile->path, 120, 120, 'proportional'); 
-				$temp = getimagesize($this->Template->bildvorschau); 
-				$this->Template->bildbreite = $temp[0]; 
-				$this->Template->bildjahr = $objImage->year; 
-				$this->Template->bildtitel = $objImage->title; 
-				$this->Template->bildquelle = $objImage->copyright; 
-				// Bildunterschrift zusammenbauen
-				($objImage->title) ? $caption = $objImage->title : $caption = '';
-				if($objImage->year)
-				{
-					($caption) ? $caption .= ' (' . $objImage->year . ')' : $caption = $objImage->year;
-				}
-				if($objImage->copyright) $caption .= '[' . $objImage->copyright . ']';
-				// Nach Copyright per Regex suchen
-				$found = preg_match("/(\[.+\])/",$caption,$treffer,PREG_OFFSET_CAPTURE);
-				if($found)
-				{
-					// Copyright gefunden, Länge und Position speichern
-					$cplen = strlen($treffer[0][0]);
-					$cppos = $treffer[0][1];
-					// Copyright ersetzen
-					$cpstr = str_replace("[","<div class=\"rechte\">",$treffer[0][0]);
-					$cpstr = str_replace("]","</div>",$cpstr);
-					// Restliche Bildunterschrift extrahieren
-					$caption = substr($caption,0,$cppos).substr($caption,$cppos+$cplen);
-					// Copyright hinzufügen
-					$caption = $cpstr.$caption;
-				}
-				$this->Template->caption = $caption; 
+				$this->Template->slider = true;
+				$this->Template->images = $images; 
+				$GLOBALS['TL_CSS'][] = 'system/modules/spielerregister/assets/css/js-image-slider.css';
+				$GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/spielerregister/assets/js/js-image-slider.js';
 			}
 			else
 			{
-				$this->Template->bildoriginal = '';
-				$this->Template->bildvorschau = '';
-				$this->Template->bildjahr = ''; 
-				$this->Template->bildtitel = ''; 
-				$this->Template->bildquelle = ''; 
-				$this->Template->caption = ''; 
+				$this->Template->slider = false; 
+				$images = array();
+				
+				// Jüngstes Bild laden
+				$objImage = $this->Database->prepare('SELECT * FROM tl_spielerregister_images WHERE pid = ? AND active = 1 ORDER BY imagedate DESC')
+				                           ->execute($objRegister->id);
+				if($objImage->numRows)
+				{
+					$GLOBALS['TL_CSS'][] = 'system/modules/spielerregister/assets/css/js-image-slider.css';
+					$GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/spielerregister/assets/js/js-image-slider.js';
+					while($objImage->next())
+					{
+						$objFile = \FilesModel::findByPk($objImage->singleSRC);
+						// Bildunterschrift zusammenbauen
+						($objImage->title) ? $caption = $objImage->title : $caption = '';
+						if($objImage->year)
+						{
+							($caption) ? $caption .= ' (' . $objImage->year . ')' : $caption = $objImage->year;
+						}
+						if($objImage->copyright) $caption .= '[' . $objImage->copyright . ']';
+						// Nach Copyright per Regex suchen
+						$caption = \Samson\Helper::replaceCopyright($caption);
+						$images[$objFile->path] = array
+						(
+							'id'        => $objFile->id,
+							'uuid'      => $objFile->uuid,
+							'name'      => $objFile->basename,
+							'singleSRC' => $objFile->path,
+							'alt'       => '',
+							'imageUrl'  => '',
+							'caption'   => $caption,
+							'thumb'     => Image::get($objFile->path, 180, 180, 'center_center')
+						);
+					}
+					$objFile = \FilesModel::findByPk($objImage->singleSRC);
+					$this->Template->bildoriginal = $objFile->path; 
+					$this->Template->bildvorschau = Image::get($objFile->path, 180, 180, 'center_center'); 
+					$temp = getimagesize($this->Template->bildvorschau); 
+					$this->Template->bildbreite = $temp[0]; 
+					$this->Template->bildjahr = $objImage->year; 
+					$this->Template->bildtitel = $objImage->title; 
+					$this->Template->bildquelle = $objImage->copyright; 
+					// Bildunterschrift zusammenbauen
+					($objImage->title) ? $caption = $objImage->title : $caption = '';
+					if($objImage->year)
+					{
+						($caption) ? $caption .= ' (' . $objImage->year . ')' : $caption = $objImage->year;
+					}
+					if($objImage->copyright) $caption .= '[' . $objImage->copyright . ']';
+					// Nach Copyright per Regex suchen
+					$found = preg_match("/(\[.+\])/",$caption,$treffer,PREG_OFFSET_CAPTURE);
+					if($found)
+					{
+						// Copyright gefunden, Länge und Position speichern
+						$cplen = strlen($treffer[0][0]);
+						$cppos = $treffer[0][1];
+						// Copyright ersetzen
+						$cpstr = str_replace("[","<div class=\"rechte\">",$treffer[0][0]);
+						$cpstr = str_replace("]","</div>",$cpstr);
+						// Restliche Bildunterschrift extrahieren
+						$caption = substr($caption,0,$cppos).substr($caption,$cppos+$cplen);
+						// Copyright hinzufügen
+						$caption = $cpstr.$caption;
+					}
+					$this->Template->caption = $caption; 
+					$this->Template->slider = true; 
+					$this->Template->images = $images; 
+				}
+				else
+				{
+					$this->Template->bildoriginal = '';
+					$this->Template->bildvorschau = '';
+					$this->Template->bildjahr = ''; 
+					$this->Template->bildtitel = ''; 
+					$this->Template->bildquelle = ''; 
+					$this->Template->caption = ''; 
+				}
 			}
+
 		}
 
 	}

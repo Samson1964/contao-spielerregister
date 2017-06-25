@@ -1,0 +1,50 @@
+<?php // https://www.marcosimbuerger.ch/contao-tipps-und-tricks-details/lightbox-colorbox-j_colorbox-fuer-bilder-und-inhalte-verwenden.html ?>
+<?php if($this->playerid): ?>
+	<a class="colorbox_content cboxElement" data-lightbox="lb<?= $this->playerid ?>" href="#lightbox_content_<?= $this->playerid ?>"><?= $this->playername ?></a>
+	<div style="display:none;">
+		<div id="lightbox_content_<?= $this->playerid ?>" class="inline">
+			<h1><?= $this->playername ?></h1>
+			<div class="lebensdaten">
+				<?php echo $this->lebensdaten; ?>
+			</div>
+		
+			<?php if($this->slider): ?>
+				<div id="sliderFrame" class="float_left" style="margin-right:6px;">
+					<div id="slider">
+						<?php foreach($this->images as $image): ?>
+						<a href="<?= $image['singleSRC'] ?>" data-lightbox="playerimage_<?= $image['id'] ?>">
+						    <img src="<?= $image['thumb'] ?>" alt="#cap<?= $image['id'] ?>" />
+						</a>
+						<?php endforeach; ?>
+					</div>
+					<div style="display: none;">
+						<?php foreach($this->images as $image): ?>
+						<div id="cap<?= $image['id'] ?>">
+						    <?= $image['caption'] ?>
+						</div>
+						<?php endforeach; ?>
+					</div>
+				</div>
+			<?php endif; ?>
+		
+			<?php if ($this->wikipedia): ?>
+				<a href="http://de.wikipedia.org/wiki/<?php echo $this->wikipedia; ?>" target="_blank"><img src="system/modules/spielerregister/assets/images/wikipedia.png" alt=""></a>
+			<?php endif; ?>
+		
+			<?php if ($this->kurzinfo): ?>
+				<div class="kurzinfo">
+					<?php echo $this->kurzinfo; ?>
+				</div>
+			<?php endif; ?>
+ 			<p>[<a href="person/player/<?= $this->playerid ?>.html"><?= $this->playername ?> im Spielerregister</a>]</p>
+		</div>
+	</div>
+
+<?php else: ?>
+
+	<?= $this->playername ?>
+
+<?php endif; ?>
+
+<?php if($this->gefunden): ?>
+<?php endif; ?>

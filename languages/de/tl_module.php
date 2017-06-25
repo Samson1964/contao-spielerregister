@@ -23,3 +23,9 @@ $GLOBALS['TL_LANG']['tl_module']['spielerregister_lastday'][1] = 'Anzahl der Tag
 
 $GLOBALS['TL_LANG']['tl_module']['spielerregister_jumpTo'][0] = 'Weiterleitungsseite';
 $GLOBALS['TL_LANG']['tl_module']['spielerregister_jumpTo'][1] = 'Bitte wählen Sie die Spielerdetail-Seite aus, zu der Besucher weitergeleitet werden, wenn Sie einen Spieler anklicken.';
+
+$GLOBALS['TL_LANG']['tl_module']['spielerregister_honorListtype'][0] = 'Liste auswählen';
+$GLOBALS['TL_LANG']['tl_module']['spielerregister_honorListtype'][1] = 'Bitte wählen Sie die Liste der Ehrungen aus.';
+
+$GLOBALS['TL_LANG']['tl_module']['spielerregister_deathlist_months'][0] = 'Anzahl Monate';
+$GLOBALS['TL_LANG']['tl_module']['spielerregister_deathlist_months'][1] = 'Bitte wählen Sie die maximale Anzahl der Monate für die Anzeige.';

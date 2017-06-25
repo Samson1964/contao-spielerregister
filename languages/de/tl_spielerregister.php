@@ -31,10 +31,10 @@ $GLOBALS["TL_LANG"]["tl_spielerregister"]["firstname2"][1] = "Geben Sie hier den
 $GLOBALS["TL_LANG"]["tl_spielerregister"]["live_legend"] = "Lebensdaten";
 
 $GLOBALS["TL_LANG"]["tl_spielerregister"]["birthday"][0] = "Geburtstag";
-$GLOBALS["TL_LANG"]["tl_spielerregister"]["birthday"][1] = "Format JJJJMMTT, JJJJMM oder JJJJ";
+$GLOBALS["TL_LANG"]["tl_spielerregister"]["birthday"][1] = "Format TT.MM.JJJJ, MM.JJJJ oder JJJJ";
 
 $GLOBALS["TL_LANG"]["tl_spielerregister"]["birthday_alt"][0] = "Abweichender Geburtstag";
-$GLOBALS["TL_LANG"]["tl_spielerregister"]["birthday_alt"][1] = "Format JJJJMMTT, JJJJMM oder JJJJ";
+$GLOBALS["TL_LANG"]["tl_spielerregister"]["birthday_alt"][1] = "Format TT.MM.JJJJ, MM.JJJJ oder JJJJ";
 
 $GLOBALS["TL_LANG"]["tl_spielerregister"]["birthplace"][0] = "Geburtsort";
 $GLOBALS["TL_LANG"]["tl_spielerregister"]["birthplace"][1] = "Geburtsort";
@@ -43,13 +43,18 @@ $GLOBALS["TL_LANG"]["tl_spielerregister"]["death"][0] = "Verstorben";
 $GLOBALS["TL_LANG"]["tl_spielerregister"]["death"][1] = "Die Person ist verstorben.";
 
 $GLOBALS["TL_LANG"]["tl_spielerregister"]["deathday"][0] = "Sterbetag";
-$GLOBALS["TL_LANG"]["tl_spielerregister"]["deathday"][1] = "Format JJJJMMTT, JJJJMM oder JJJJ";
+$GLOBALS["TL_LANG"]["tl_spielerregister"]["deathday"][1] = "Format TT.MM.JJJJ, MM.JJJJ oder JJJJ";
 
 $GLOBALS["TL_LANG"]["tl_spielerregister"]["deathday_alt"][0] = "Abweichender Sterbetag";
-$GLOBALS["TL_LANG"]["tl_spielerregister"]["deathday_alt"][1] = "Format JJJJMMTT, JJJJMM oder JJJJ";
+$GLOBALS["TL_LANG"]["tl_spielerregister"]["deathday_alt"][1] = "Format TT.MM.JJJJ, MM.JJJJ oder JJJJ";
 
 $GLOBALS["TL_LANG"]["tl_spielerregister"]["deathplace"][0] = "Sterbeort";
 $GLOBALS["TL_LANG"]["tl_spielerregister"]["deathplace"][1] = "Sterbeort";
+
+$GLOBALS["TL_LANG"]["tl_spielerregister"]["photos_legend"] = "Fotos";
+
+$GLOBALS["TL_LANG"]["tl_spielerregister"]["multiSRC"][0] = "Quelldateien";
+$GLOBALS["TL_LANG"]["tl_spielerregister"]["multiSRC"][1] = "Bitte wählen Sie eine oder mehr Dateien oder Ordner aus der Dateiübersicht. Wenn Sie einen Ordner auswählen, werden die darin enthaltenen Dateien automatisch eingefügt.";
 
 $GLOBALS["TL_LANG"]["tl_spielerregister"]["info_legend"] = "Personenbeschreibung";
 
@@ -76,6 +81,9 @@ $GLOBALS["TL_LANG"]["tl_spielerregister"]["chessgames_id"][1] = "ID in chessgame
 $GLOBALS["TL_LANG"]["tl_spielerregister"]["365chess_id"][0] = "ID 365chess.com";
 $GLOBALS["TL_LANG"]["tl_spielerregister"]["365chess_id"][1] = "ID in 365chess.com";
 
+$GLOBALS["TL_LANG"]["tl_spielerregister"]["chess_id"][0] = "ID chess.com";
+$GLOBALS["TL_LANG"]["tl_spielerregister"]["chess_id"][1] = "ID in chess.com";
+
 $GLOBALS["TL_LANG"]["tl_spielerregister"]["homepage"][0] = "Homepage";
 $GLOBALS["TL_LANG"]["tl_spielerregister"]["homepage"][1] = "Homepage der Person";
 
@@ -98,14 +106,20 @@ $GLOBALS["TL_LANG"]["tl_spielerregister"]["honorgoldpin"][1] = "Goldene Ehrennad
 $GLOBALS["TL_LANG"]["tl_spielerregister"]["honorsilverpin"][0] = "Silberne Ehrennadel";
 $GLOBALS["TL_LANG"]["tl_spielerregister"]["honorsilverpin"][1] = "Silberne Ehrennadel im Jahr";
 
-$GLOBALS["TL_LANG"]["tl_spielerregister"]["honorbadge"][0] = "Ehrenplakette";
-$GLOBALS["TL_LANG"]["tl_spielerregister"]["honorbadge"][1] = "Ehrenplakette im Jahr";
+$GLOBALS["TL_LANG"]["tl_spielerregister"]["honorgoldbadge"][0] = "Goldene Ehrenplakette";
+$GLOBALS["TL_LANG"]["tl_spielerregister"]["honorgoldbadge"][1] = "Goldene Ehrenplakette im Jahr";
+
+$GLOBALS["TL_LANG"]["tl_spielerregister"]["honorsilverbadge"][0] = "Silberne Ehrenplakette";
+$GLOBALS["TL_LANG"]["tl_spielerregister"]["honorsilverbadge"][1] = "Silberne Ehrenplakette im Jahr";
 
 $GLOBALS["TL_LANG"]["tl_spielerregister"]["honorletter"][0] = "Ehrenbrief";
 $GLOBALS["TL_LANG"]["tl_spielerregister"]["honorletter"][1] = "Ehrenbrief im Jahr";
 
 $GLOBALS["TL_LANG"]["tl_spielerregister"]["honorplate"][0] = "Ehrenteller";
 $GLOBALS["TL_LANG"]["tl_spielerregister"]["honorplate"][1] = "Ehrenteller im Jahr";
+
+$GLOBALS["TL_LANG"]["tl_spielerregister"]["honormedal"][0] = "Bundesmedaille";
+$GLOBALS["TL_LANG"]["tl_spielerregister"]["honormedal"][1] = "Bundesmedaille im Jahr";
 
 $GLOBALS["TL_LANG"]["tl_spielerregister"]["images_legend"] = "Fotos";
 
@@ -166,6 +180,8 @@ $GLOBALS['TL_LANG']['tl_spielerregister']['filter_birthdayfail'] = "Geburtsdatum
 $GLOBALS['TL_LANG']['tl_spielerregister']['filter_deathdayfail'] = "Sterbedatum fehlt";
 $GLOBALS['TL_LANG']['tl_spielerregister']['filter_birthdayerror'] = "Geburtsdatum unvollständig";
 $GLOBALS['TL_LANG']['tl_spielerregister']['filter_deathdayerror'] = "Sterbedatum unvollständig";
+$GLOBALS['TL_LANG']['tl_spielerregister']['filter_birthplacefail'] = "Geburtsort fehlt";
+$GLOBALS['TL_LANG']['tl_spielerregister']['filter_deathplacefail'] = "Sterbeort fehlt";
 $GLOBALS['TL_LANG']['tl_spielerregister']['filter_shortinfo'] = "Kurzinfo fehlt";
 $GLOBALS['TL_LANG']['tl_spielerregister']['filter_firstnamefail'] = "Vorname fehlt";
 

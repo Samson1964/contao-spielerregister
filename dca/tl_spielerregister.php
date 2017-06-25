@@ -32,10 +32,20 @@ $GLOBALS['TL_DCA']['tl_spielerregister'] = array
 		(
 			'keys' => array
 			(
-				'id'       => 'primary',
-				'alias'    => 'index',
-				'birthday' => 'index',
-				'deathday' => 'index'
+				'id'                 => 'primary',
+				'alias'              => 'index',
+				'birthday'           => 'index',
+				'deathday'           => 'index',
+				'honorpresident'     => 'index',
+				'honormember'        => 'index',
+				'honorgoldpin'       => 'index',
+				'honorsilverpin'     => 'index',
+				'honorgoldbadge'     => 'index',
+				'honorsilverbadge'   => 'index',
+				'honormedal'         => 'index',
+				'honorletter'        => 'index',
+				'honorplate'         => 'index',
+				'honormedal'         => 'index'
 			)
 		)
 	),
@@ -103,6 +113,13 @@ $GLOBALS['TL_DCA']['tl_spielerregister'] = array
 				'attributes'          => 'onclick="if(!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm'] . '\'))return false;Backend.getScrollOffset()"',
 				//'button_callback'     => array('tl_spielerregister', 'deleteArchive')
 			),
+			'toggle' => array
+			(
+				'label'               => &$GLOBALS['TL_LANG']['tl_spielerregister']['toggle'],
+				'icon'                => 'visible.gif',
+				'attributes'          => 'onclick="Backend.getScrollOffset();return AjaxRequest.toggleVisibility(this,%s)"',
+				'button_callback'     => array('tl_spielerregister', 'toggleIcon')
+			),
 			'show' => array
 			(
 				'label'               => &$GLOBALS['TL_LANG']['tl_spielerregister']['show'],
@@ -116,7 +133,7 @@ $GLOBALS['TL_DCA']['tl_spielerregister'] = array
 	'palettes' => array
 	(
 		'__selector__'                => array('death'),
-		'default'                     => 'infobox;{namen_legend},surname1,firstname1,title,alias;{namen2_legend:hide},surname2,firstname2,surname3,firstname3,surname4,firstname4;{live_legend},birthday,birthplace,birthday_alt,death;{info_legend:hide},shortinfo,longinfo;{link_legend:hide},wikipedia,fide_id,dewis_id,chessgames_id,365chess_id,homepage;{star_legend},importance;{dsb_legend},honorpresident,honormember,honorgoldpin,honorsilverpin,honorbadge,honorletter,honorplate;{images_legend:hide};{intern_legend:hide},intern;{active_legend},nohighlighting,active'
+		'default'                     => 'infobox;{namen_legend},surname1,firstname1,title,alias;{namen2_legend:hide},surname2,firstname2,surname3,firstname3,surname4,firstname4;{live_legend},birthday,birthplace,birthday_alt,death;{photos_legend:hide},multiSRC;{info_legend:hide},shortinfo,longinfo;{link_legend:hide},wikipedia,fide_id,dewis_id,chessgames_id,chess365_id,chess_id,homepage;{star_legend},importance;{dsb_legend},honorpresident,honormember,honorgoldpin,honorsilverpin,honorgoldbadge,honorsilverbadge,honorletter,honorplate,honormedal;{images_legend:hide};{intern_legend:hide},intern;{active_legend},nohighlighting,active'
 	),
 
 	// Subpalettes
@@ -261,11 +278,11 @@ $GLOBALS['TL_DCA']['tl_spielerregister'] = array
 			),
 			'load_callback'           => array
 			(
-				array('tl_spielerregister', 'getDate')
+				array('\Samson\Helper', 'getDate')
 			),
 			'save_callback' => array
 			(
-				array('tl_spielerregister', 'putDate')
+				array('\Samson\Helper', 'putDate')
 			),
 			'sql'                     => "int(8) unsigned NOT NULL default '0'"
 		),
@@ -283,11 +300,11 @@ $GLOBALS['TL_DCA']['tl_spielerregister'] = array
 			),
 			'load_callback'           => array
 			(
-				array('tl_spielerregister', 'getDate')
+				array('\Samson\Helper', 'getDate')
 			),
 			'save_callback' => array
 			(
-				array('tl_spielerregister', 'putDate')
+				array('\Samson\Helper', 'putDate')
 			),
 			'sql'                     => "int(8) unsigned NOT NULL default '0'"
 		),
@@ -316,11 +333,11 @@ $GLOBALS['TL_DCA']['tl_spielerregister'] = array
 			),
 			'load_callback'           => array
 			(
-				array('tl_spielerregister', 'getDate')
+				array('\Samson\Helper', 'getDate')
 			),
 			'save_callback' => array
 			(
-				array('tl_spielerregister', 'putDate')
+				array('\Samson\Helper', 'putDate')
 			),
 			'sql'                     => "int(8) unsigned NOT NULL default '0'"
 		),
@@ -338,11 +355,11 @@ $GLOBALS['TL_DCA']['tl_spielerregister'] = array
 			),
 			'load_callback'           => array
 			(
-				array('tl_spielerregister', 'getDate')
+				array('\Samson\Helper', 'getDate')
 			),
 			'save_callback' => array
 			(
-				array('tl_spielerregister', 'putDate')
+				array('\Samson\Helper', 'putDate')
 			),
 			'sql'                     => "int(8) unsigned NOT NULL default '0'"
 		),
@@ -363,6 +380,22 @@ $GLOBALS['TL_DCA']['tl_spielerregister'] = array
 			'eval'                    => array('submitOnChange'=>true, 'tl_class'=>'clr'),
 			'sql'                     => "char(1) NOT NULL default ''"
 		),
+		'multiSRC' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_spielerregister']['multiSRC'],
+			'exclude'                 => true,
+			'inputType'               => 'fileTree',
+			'eval'                    => array
+			(
+				'multiple'            => true, 
+				'fieldType'           => 'checkbox', 
+				'files'               => true, 
+				'isGallery'           => true,
+				'extensions'          => Config::get('validImageTypes'),
+				'mandatory'           => false
+			),
+			'sql'                     => "blob NULL"
+		), 
 		'shortinfo' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_spielerregister']['shortinfo'],
@@ -419,13 +452,22 @@ $GLOBALS['TL_DCA']['tl_spielerregister'] = array
 			'eval'                    => array('mandatory'=>false, 'maxlength'=>64, 'tl_class'=>'w50 clr'),
 			'sql'                     => "varchar(64) NOT NULL default ''"
 		), 
-		'365chess_id' => array
+		'chess365_id' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_spielerregister']['365chess_id'],
 			'exclude'                 => true,
 			'search'                  => false,
 			'inputType'               => 'text',
 			'eval'                    => array('mandatory'=>false, 'maxlength'=>64, 'tl_class'=>'w50'),
+			'sql'                     => "varchar(64) NOT NULL default ''"
+		), 
+		'chess_id' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_spielerregister']['chess_id'],
+			'exclude'                 => true,
+			'search'                  => false,
+			'inputType'               => 'text',
+			'eval'                    => array('mandatory'=>false, 'maxlength'=>64, 'tl_class'=>'w50 clr'),
 			'sql'                     => "varchar(64) NOT NULL default ''"
 		), 
 		'homepage' => array
@@ -491,10 +533,20 @@ $GLOBALS['TL_DCA']['tl_spielerregister'] = array
 			'eval'                    => array('maxlength'=>4, 'tl_class'=>'w50', 'rgxp' => 'digit'),
 			'sql'                     => "varchar(4) NOT NULL default ''"
 		),
-		// Ehrenplakette im Jahr xxxx
-		'honorbadge' => array
+		// Goldene Ehrenplakette im Jahr xxxx
+		'honorgoldbadge' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_spielerregister']['honorbadge'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_spielerregister']['honorgoldbadge'],
+			'exclude'                 => true,
+			'search'                  => false,
+			'inputType'               => 'text',
+			'eval'                    => array('maxlength'=>4, 'tl_class'=>'w50', 'rgxp' => 'digit'),
+			'sql'                     => "varchar(4) NOT NULL default ''"
+		),
+		// Silberne Ehrenplakette im Jahr xxxx
+		'honorsilverbadge' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_spielerregister']['honorsilverbadge'],
 			'exclude'                 => true,
 			'search'                  => false,
 			'inputType'               => 'text',
@@ -515,6 +567,16 @@ $GLOBALS['TL_DCA']['tl_spielerregister'] = array
 		'honorplate' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_spielerregister']['honorplate'],
+			'exclude'                 => true,
+			'search'                  => false,
+			'inputType'               => 'text',
+			'eval'                    => array('maxlength'=>4, 'tl_class'=>'w50', 'rgxp' => 'digit'),
+			'sql'                     => "varchar(4) NOT NULL default ''"
+		),
+		// Bundesmedaille im Jahr xxxx
+		'honormedal' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_spielerregister']['honormedal'],
 			'exclude'                 => true,
 			'search'                  => false,
 			'inputType'               => 'text',
@@ -542,9 +604,10 @@ $GLOBALS['TL_DCA']['tl_spielerregister'] = array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_spielerregister']['active'],
 			'inputType'               => 'checkbox',
+			'default'                 => 1,
 			'filter'                  => true,
 			'eval'                    => array('tl_class' => 'w50','isBoolean' => true),
-			'sql'                     => "char(1) NOT NULL default ''"
+			'sql'                     => "char(1) NOT NULL default '1'"
 		),
 	)
 );
@@ -581,70 +644,26 @@ class tl_spielerregister extends Backend
 		$temp = $arrRow['surname1'];
 		if($arrRow['firstname1']) $temp .= ', ' . $arrRow['firstname1'];
 		// Lebensdaten ausgeben
-		$birthday = $this->getDate($arrRow['birthday']);
-		$deathday = $this->getDate($arrRow['deathday']);
-		if($birthday || $deathday)
+		$birthday = \Samson\Helper::getDate($arrRow['birthday']);
+		$deathday = \Samson\Helper::getDate($arrRow['deathday']);
+		$death = $arrRow['death'];
+		// Summe bilden für weitere Operationen
+		$summe = 0;
+		if($birthday) $summe += 1;
+		if($deathday) $summe += 2;
+		if($death) $summe += 4;
+		// Summe abfragen und Text bauen
+		switch($summe)
 		{
-			$temp .= ' (';
-			if($birthday && !$deathday) $temp .= '* '.$birthday;
-			elseif(!$birthday && $deathday) $temp .= '* ?, &dagger; '.$deathday;
-			else $temp .= '* '.$birthday.', &dagger; '.$deathday;
-			$temp .= ')';
+			case 1: $temp .= ' (* ' . $birthday . ')'; break;
+			case 2: 
+			case 6: $temp .= ' (* ?, &dagger; ' . $deathday . ')'; break;
+			case 3: 
+			case 7: $temp .= ' (* '.$birthday.', &dagger; '.$deathday . ')'; break;
+			case 4: $temp .= ' (* ?, &dagger; ?)'; break;
+			case 5: $temp .= ' (* '.$birthday.', &dagger; ?)'; break;
+			default:
 		}
-		return $temp;
-	}
-
-	/**
-	 * Datumswert aus Datenbank umwandeln
-	 * @param mixed
-	 * @return mixed
-	 */
-	public function getDate($varValue)
-	{
-		$laenge = strlen($varValue);
-		$temp = '';
-		switch($laenge)
-		{
-			case 8: // JJJJMMTT
-				$temp = substr($varValue,6,2).'.'.substr($varValue,4,2).'.'.substr($varValue,0,4);
-				break;
-			case 6: // JJJJMM
-				$temp = substr($varValue,4,2).'.'.substr($varValue,0,4);
-				break;
-			case 4: // JJJJ
-				$temp = $varValue;
-				break;
-			default: // anderer Wert
-				$temp = '';
-		}
-
-		return $temp;
-	}
-
-	/**
-	 * Datumswert für Datenbank umwandeln
-	 * @param mixed
-	 * @return mixed
-	 */
-	public function putDate($varValue)
-	{
-		$laenge = strlen(trim($varValue));
-		$temp = '';
-		switch($laenge)
-		{
-			case 10: // TT.MM.JJJJ
-				$temp = substr($varValue,6,4).substr($varValue,3,2).substr($varValue,0,2);
-				break;
-			case 7: // MM.JJJJ
-				$temp = substr($varValue,3,4).substr($varValue,0,2);
-				break;
-			case 4: // JJJJ
-				$temp = $varValue;
-				break;
-			default: // anderer Wert
-				$temp = 0;
-		}
-
 		return $temp;
 	}
 
@@ -688,6 +707,9 @@ class tl_spielerregister extends Backend
 	{
 		// Suchmaschinenlinks generieren
 		$googlelink = 'https://www.google.de/search?q=%22' . $dc->activeRecord->firstname1 . '+' . $dc->activeRecord->surname1 . '%22+schach';
+		$chess365link = 'http://www.365chess.com/search_result.php?wlname=' . $dc->activeRecord->surname1 . '&amp;wname=' . $dc->activeRecord->firstname1 . '&amp;nocolor=on&amp;sply=1&amp;submit_search=1';
+		$chessgameslink = 'http://www.chessgames.com/perl/ezsearch.pl?search=' . $dc->activeRecord->surname1;
+		$chesslink = 'https://www.chess.com/games/search?sort=6&amp;p1=' . $dc->activeRecord->surname1 . '+' . $dc->activeRecord->firstname1;
 
 		// Popuplink generieren
 		$popuplink = 'contao/main.php?do=spielerregister&amp;table=tl_spielerregister_images&amp;id=' . $dc->activeRecord->id . '&amp;popup=1&amp;rt=' . REQUEST_TOKEN . '" title="' . sprintf(specialchars($GLOBALS['TL_LANG']['tl_content']['editalias'][1]), $dc->activeRecord->id) . '" style="padding-left:3px" onclick="Backend.openModalIframe({\'width\':840,\'title\':\'' . specialchars(str_replace("'", "\\'", sprintf($GLOBALS['TL_LANG']['tl_content']['editalias'][1], $dc->activeRecord->id))) . '\',\'url\':this.href});return false';
@@ -715,7 +737,10 @@ class tl_spielerregister extends Backend
 		$string = '
 <div class="long">
   <h3><label>Infobox</label></h3>
-  <p>Spieler suchen in: <a href="' . $googlelink . '" target="_blank">Google</a></p>
+  <p>Spieler suchen in: <a href="' . $googlelink . '" target="_blank">Google</a> |
+  <a href="' . $chess365link . '" target="_blank">365chess.com</a> |
+  <a href="' . $chessgameslink . '" target="_blank">chessgames.com</a> |
+  <a href="' . $chesslink . '" target="_blank">chess.com</a></p>
   <p>'.$fotolink.'</p>
 </div>'; 
 		
@@ -749,6 +774,8 @@ https://community.contao.org/de/showthread.php?48275-DCA-Filter-erstellen-von-Ch
 					'3' => $GLOBALS['TL_LANG']['tl_spielerregister']['filter_deathdayfail'],
 					'4' => $GLOBALS['TL_LANG']['tl_spielerregister']['filter_birthdayerror'],
 					'5' => $GLOBALS['TL_LANG']['tl_spielerregister']['filter_deathdayerror'],
+					'8' => $GLOBALS['TL_LANG']['tl_spielerregister']['filter_birthplacefail'],
+					'9' => $GLOBALS['TL_LANG']['tl_spielerregister']['filter_deathplacefail'],
 					'6' => $GLOBALS['TL_LANG']['tl_spielerregister']['filter_shortinfo'],
 					'7' => $GLOBALS['TL_LANG']['tl_spielerregister']['filter_firstnamefail'],
 				)
@@ -846,6 +873,16 @@ https://community.contao.org/de/showthread.php?48275-DCA-Filter-erstellen-von-Ch
 													  ->execute();
 				$arrPlayers = is_array($arrPlayers) ? array_intersect($arrPlayers, $objPlayers->fetchEach('id')) : $objPlayers->fetchEach('id');
                 break;
+            case '8': // Geburtsort fehlt
+				$objPlayers = \Database::getInstance()->prepare("SELECT id FROM tl_spielerregister WHERE birthplace = ''")
+													  ->execute();
+				$arrPlayers = is_array($arrPlayers) ? array_intersect($arrPlayers, $objPlayers->fetchEach('id')) : $objPlayers->fetchEach('id');
+                break;
+            case '9': // Sterbeort fehlt
+				$objPlayers = \Database::getInstance()->prepare("SELECT id FROM tl_spielerregister WHERE deathplace = '' AND death = '1'")
+													  ->execute();
+				$arrPlayers = is_array($arrPlayers) ? array_intersect($arrPlayers, $objPlayers->fetchEach('id')) : $objPlayers->fetchEach('id');
+                break;
 
             default:
         }
@@ -858,4 +895,71 @@ https://community.contao.org/de/showthread.php?48275-DCA-Filter-erstellen-von-Ch
 
 	}  
 	
+	/**
+	 * Ändert das Aussehen des Toggle-Buttons.
+	 * @param $row
+	 * @param $href
+	 * @param $label
+	 * @param $title
+	 * @param $icon
+	 * @param $attributes
+	 * @return string
+	 */
+	public function toggleIcon($row, $href, $label, $title, $icon, $attributes)
+	{
+		$this->import('BackendUser', 'User');
+		
+		if (strlen($this->Input->get('tid')))
+		{
+			$this->toggleVisibility($this->Input->get('tid'), ($this->Input->get('state') == 0));
+			$this->redirect($this->getReferer());
+		}
+		
+		// Check permissions AFTER checking the tid, so hacking attempts are logged
+		if (!$this->User->isAdmin && !$this->User->hasAccess('tl_spielerregister::active', 'alexf'))
+		{
+			return '';
+		}
+		
+		$href .= '&amp;id='.$this->Input->get('id').'&amp;tid='.$row['id'].'&amp;state='.$row[''];
+		
+		if (!$row['active'])
+		{
+			$icon = 'invisible.gif';
+		}
+		
+		return '<a href="'.$this->addToUrl($href).'" title="'.specialchars($title).'"'.$attributes.'>'.$this->generateImage($icon, $label).'</a> ';
+	}
+
+	/**
+	 * Toggle the visibility of an element
+	 * @param integer
+	 * @param boolean
+	 */
+	public function toggleVisibility($intId, $blnPublished)
+	{
+		// Check permissions to publish
+		if (!$this->User->isAdmin && !$this->User->hasAccess('tl_spielerregister::active', 'alexf'))
+		{
+			$this->log('Not enough permissions to show/hide record ID "'.$intId.'"', 'tl_spielerregister toggleVisibility', TL_ERROR);
+			$this->redirect('contao/main.php?act=error');
+		}
+		
+		$this->createInitialVersion('tl_spielerregister', $intId);
+		
+		// Trigger the save_callback
+		if (is_array($GLOBALS['TL_DCA']['tl_spielerregister']['fields']['active']['save_callback']))
+		{
+			foreach ($GLOBALS['TL_DCA']['tl_spielerregister']['fields']['active']['save_callback'] as $callback)
+			{
+				$this->import($callback[0]);
+				$blnPublished = $this->$callback[0]->$callback[1]($blnPublished, $this);
+			}
+		}
+		
+		// Update the database
+		$this->Database->prepare("UPDATE tl_spielerregister SET tstamp=". time() .", active='" . ($blnPublished ? '' : '1') . "' WHERE id=?")
+		               ->execute($intId);
+		$this->createNewVersion('tl_spielerregister', $intId);
+	}
 }

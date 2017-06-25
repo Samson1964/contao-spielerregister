@@ -61,7 +61,7 @@ class Yearday extends \Module
 		$bis = date("Ymd",$ZEITSTEMPEL["bis"]);
 		$bisjahr = substr($bis,0,4);
 		
-		$objRegister = $this->Database->prepare('SELECT * FROM tl_spielerregister WHERE active = 1 AND nohighlighting = 0 AND importance >= ?')
+		$objRegister = $this->Database->prepare('SELECT * FROM tl_spielerregister WHERE active = 1 AND nohighlighting = 0 AND (importance = 10 OR importance >= ?)')
 		                              ->execute($this->spielerregister_level);
 
 		// Template-Objekt anlegen

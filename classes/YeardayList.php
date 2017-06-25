@@ -71,7 +71,7 @@ class YeardayList extends \Module
 		$wochen1 = date("Ymd",$ZEITSTEMPEL["1woche"]);
 		$wochen2 = date("Ymd",$ZEITSTEMPEL["2wochen"]);
 		
-		$objRegister = $this->Database->prepare('SELECT * FROM tl_spielerregister WHERE active = 1 AND importance >= ?')
+		$objRegister = $this->Database->prepare('SELECT * FROM tl_spielerregister WHERE active = 1 AND (importance = 10 OR importance >= ?)')
 		                              ->execute($this->spielerregister_level);
 
 		// Template-Objekt anlegen

@@ -13,7 +13,7 @@ echo '<div class="biographie">';
 if($this->bild)
 {
 	echo '<figure>';
-	echo '<img src="' . $this->bild . '" />';
+	echo '<img src="' . $this->bild . '" alt="">';
 	echo '</figure>';
 }
 
@@ -21,7 +21,7 @@ if($this->bild)
 echo '<div class="spielername">';
 if($this->wikipedia)
 {
-	echo '<a href="http://de.wikipedia.org/wiki/' . $this->wikipedia . '" target="_blank"><img src="system/modules/spielerregister/assets/images/wikipedia.png" /></a> ';
+	echo '<a href="http://de.wikipedia.org/wiki/' . $this->wikipedia . '" target="_blank"><img src="system/modules/spielerregister/assets/images/wikipedia.png" alt=""></a> ';
 }
 echo $this->vorname . ' ';
 echo $this->nachname;

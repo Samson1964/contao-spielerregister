@@ -1,0 +1,23 @@
+<?php //$this->showTemplateVars(); ?>
+
+<div class="ce_table <?php echo $this->class; ?> block"<?php echo $this->cssID; ?><?php if ($this->style): ?> style="<?php echo $this->style; ?>"<?php endif; ?>>
+	
+	<?php if ($this->headline): ?>
+		<<?php echo $this->hl; ?>><?php echo $this->headline; ?></<?php echo $this->hl; ?>>
+	<?php endif; ?> 
+
+	<table>
+	<?php foreach($this->data as $array): ?>
+		<tr>
+			<td><?php echo $array['jahr']; ?></td>
+			<td>
+				<?php if($array['bild']): ?>
+					<img src="<?php echo $array['bild']; ?>" alt="">
+				<?php endif; ?>
+				<a href="person/player/<?php echo $array['id']; ?>.html"><?php echo $array['vorname']; ?> <?php echo $array['nachname']; ?></a><?php if($array['tot']) echo ' &dagger;'; ?>
+			</td>
+		</tr>
+	<?php endforeach; ?>
+	</table>
+	
+</div> 

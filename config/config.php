@@ -16,6 +16,8 @@ $GLOBALS['FE_MOD']['spielerregister'] = array
 	'spielerregister_playerdetail' => 'PlayerDetail',
 	'spielerregister_yeardaylist'  => 'YeardayList',
 	'spielerregister_yearday'      => 'Yearday',
+	'spielerregister_honorlist'    => 'HonorList',
+	'spielerregister_deathlist'    => 'DeathList',
 );  
 
 /**
@@ -29,6 +31,13 @@ if(!$GLOBALS['BE_MOD']['dsb'])
 	array_insert($GLOBALS['BE_MOD'], 0, $dsb);
 }
 
+/**
+ * Inserttag für Registerersetzung in den Hooks anmelden
+ */
+
+$GLOBALS['TL_HOOKS']['replaceInsertTags'][] = array('Spielerregister','ReplacePlayer');
+
+
 $GLOBALS['BE_MOD']['dsb']['spielerregister'] = array
 (
 	'tables'         => array('tl_spielerregister', 'tl_spielerregister_images'),
@@ -36,4 +45,11 @@ $GLOBALS['BE_MOD']['dsb']['spielerregister'] = array
 	'export'         => array('ExportSpielerregister', 'exportSpieler')
 );
 
-?>
+// Konfiguration für ProSearch
+$GLOBALS['PS_SEARCHABLE_MODULES']['spielerregister'] = array(
+	'icon'           => 'system/modules/spielerregister/assets/images/icon.png',
+	'title'          => array('surname1','firstname1', 'birthplace', 'deathplace', 'shortinfo'),
+	'searchIn'       => array('surname1','firstname1', 'birthplace', 'deathplace', 'shortinfo'),
+	'tables'         => array('tl_spielerregister'),
+	'shortcut'       => 'sr'
+);

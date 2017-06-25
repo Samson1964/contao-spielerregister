@@ -21,7 +21,7 @@ for($i=0;$i<$this->Anzahl;$i++)
 	if($this->Ausgabe['bild'][$i])
 	{
 		echo '<figure>';
-		echo '<img src="' . $this->Ausgabe['bild'][$i] . '" />';
+		echo '<img src="' . $this->Ausgabe['bild'][$i] . '" alt="">';
 		echo '</figure>';
 	}
 
@@ -29,7 +29,7 @@ for($i=0;$i<$this->Anzahl;$i++)
 	echo '<h3 class="spielername">';
 	if($this->Ausgabe['wikipedia'][$i])
 	{
-		echo '<a href="http://de.wikipedia.org/wiki/' . $this->Ausgabe['wikipedia'][$i] . '" target="_blank"><img src="system/modules/spielerregister/assets/images/wikipedia.png" /></a> ';
+		echo '<a href="http://de.wikipedia.org/wiki/' . $this->Ausgabe['wikipedia'][$i] . '" target="_blank"><img src="system/modules/spielerregister/assets/images/wikipedia.png" alt=""></a> ';
 	}
 	echo '<a href="'. $this->Ausgabe['spielerlink'][$i] .'">' . $this->Ausgabe['vorname'][$i] . ' ';
 	echo $this->Ausgabe['nachname'][$i] . '</a>';
