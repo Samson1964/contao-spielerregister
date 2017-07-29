@@ -24,10 +24,14 @@ $GLOBALS['TL_DCA']['tl_spielerregister'] = array
 		'ctable'                      => array('tl_spielerregister_images'),
 		'switchToEdit'                => true, 
 		'enableVersioning'            => true,
-        'onload_callback' => array
-        (
+		'onload_callback' => array
+		(
 			array('tl_spielerregister', 'applyAdvancedFilter'),
 		), 
+		'onsubmit_callback' => array
+		(
+			array('tl_spielerregister', 'generateAlias')
+		),
 		'sql' => array
 		(
 			'keys' => array
@@ -251,15 +255,11 @@ $GLOBALS['TL_DCA']['tl_spielerregister'] = array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_spielerregister']['alias'],
 			'exclude'                 => true,
-			'search'                  => false,
+			'search'                  => true,
 			'sorting'                 => true,
 			'flag'                    => 1,
 			'inputType'               => 'text',
-			'eval'                    => array('rgxp'=>'alias', 'unique'=>true, 'maxlength'=>128, 'tl_class'=>'w50 clr'),
-			'save_callback' => array
-			(
-				array('tl_spielerregister', 'generateAlias')
-			),
+			'eval'                    => array('rgxp'=>'alias', 'unique'=>false, 'maxlength'=>128, 'tl_class'=>'w50 clr'),
 			'sql'                     => "varbinary(128) NOT NULL default ''"
 		), 
 		'birthday' => array
@@ -667,41 +667,30 @@ class tl_spielerregister extends Backend
 		return $temp;
 	}
 
+
 	/**
-	 * Generiert automatisch ein Alias aus Vor- und Nachname
+	 * Generiert automatisch ein Alias aus allen Vornamen und allen Nachnamen
 	 * @param mixed
 	 * @param \DataContainer
 	 * @return string
 	 * @throws \Exception
 	 */
-	public function generateAlias($varValue, DataContainer $dc)
+	public function generateAlias(DataContainer $dc)
 	{
-		$autoAlias = false;
+		$temp = $dc->activeRecord->surname1;
+		$temp .= '-'.$dc->activeRecord->surname2;
+		$temp .= '-'.$dc->activeRecord->surname3;
+		$temp .= '-'.$dc->activeRecord->surname4;
+		$temp .= '-'.$dc->activeRecord->firstname1;
+		$temp .= '-'.$dc->activeRecord->firstname2;
+		$temp .= '-'.$dc->activeRecord->firstname3;
+		$temp .= '-'.$dc->activeRecord->firstname4;
 
-		// Generate alias if there is none
-		if ($varValue == '')
-		{
-			$autoAlias = true;
-			$varValue = standardize(String::restoreBasicEntities($dc->activeRecord->surname1 . '-' . $dc->activeRecord->firstname1));
-		}
+		$temp = StringUtil::generateAlias($temp);
+		\Database::getInstance()->prepare("UPDATE tl_spielerregister SET alias=? WHERE id=?")
+		                        ->execute($temp, $dc->id);
+	}
 
-		$objAlias = $this->Database->prepare("SELECT id FROM tl_spielerregister WHERE alias=?")
-								   ->execute($varValue);
-
-		// Check whether the news alias exists
-		if ($objAlias->numRows > 1 && !$autoAlias)
-		{
-			throw new Exception(sprintf($GLOBALS['TL_LANG']['ERR']['aliasExists'], $varValue));
-		}
-
-		// Add ID to alias
-		if ($objAlias->numRows && $autoAlias)
-		{
-			$varValue .= '-' . $dc->id;
-		}
-
-		return $varValue;
-	} 
 
 	public function getInfobox(DataContainer $dc)
 	{
