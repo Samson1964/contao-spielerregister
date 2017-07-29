@@ -678,13 +678,13 @@ class tl_spielerregister extends Backend
 	public function generateAlias(DataContainer $dc)
 	{
 		$temp = $dc->activeRecord->surname1;
-		$temp .= '-'.$dc->activeRecord->surname2;
-		$temp .= '-'.$dc->activeRecord->surname3;
-		$temp .= '-'.$dc->activeRecord->surname4;
-		$temp .= '-'.$dc->activeRecord->firstname1;
-		$temp .= '-'.$dc->activeRecord->firstname2;
-		$temp .= '-'.$dc->activeRecord->firstname3;
-		$temp .= '-'.$dc->activeRecord->firstname4;
+		if($dc->activeRecord->surname2) $temp .= '-'.$dc->activeRecord->surname2;
+		if($dc->activeRecord->surname3) $temp .= '-'.$dc->activeRecord->surname3;
+		if($dc->activeRecord->surname4) $temp .= '-'.$dc->activeRecord->surname4;
+		if($dc->activeRecord->firstname1) $temp .= '-'.$dc->activeRecord->firstname1;
+		if($dc->activeRecord->firstname2) $temp .= '-'.$dc->activeRecord->firstname2;
+		if($dc->activeRecord->firstname3) $temp .= '-'.$dc->activeRecord->firstname3;
+		if($dc->activeRecord->firstname4) $temp .= '-'.$dc->activeRecord->firstname4;
 
 		$temp = StringUtil::generateAlias($temp);
 		\Database::getInstance()->prepare("UPDATE tl_spielerregister SET alias=? WHERE id=?")

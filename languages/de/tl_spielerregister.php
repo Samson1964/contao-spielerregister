@@ -18,7 +18,7 @@ $GLOBALS["TL_LANG"]["tl_spielerregister"]["title"][0] = "Titel";
 $GLOBALS["TL_LANG"]["tl_spielerregister"]["title"][1] = "Geben Sie hier den Titel ein, z.B. Dr. oder Prof.Dr.";
 
 $GLOBALS["TL_LANG"]["tl_spielerregister"]["alias"][0] = "Alias";
-$GLOBALS["TL_LANG"]["tl_spielerregister"]["alias"][1] = "Das Alias wird automatisch beim Speichern aus Vor- und Nachname generiert, wenn das Feld leer ist.";
+$GLOBALS["TL_LANG"]["tl_spielerregister"]["alias"][1] = "Das Alias wird automatisch beim Speichern aus allen Vor- und Nachnamen generiert.";
 
 $GLOBALS["TL_LANG"]["tl_spielerregister"]["namen2_legend"] = "Alternative Namen";
 
