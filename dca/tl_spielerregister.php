@@ -30,7 +30,8 @@ $GLOBALS['TL_DCA']['tl_spielerregister'] = array
 		), 
 		'onsubmit_callback' => array
 		(
-			array('tl_spielerregister', 'generateAlias')
+			array('tl_spielerregister', 'generateAlias'),
+			array('tl_spielerregister', 'saveNewRecordTime')
 		),
 		'sql' => array
 		(
@@ -689,6 +690,22 @@ class tl_spielerregister extends Backend
 		$temp = StringUtil::generateAlias($temp);
 		\Database::getInstance()->prepare("UPDATE tl_spielerregister SET alias=? WHERE id=?")
 		                        ->execute($temp, $dc->id);
+	}
+
+	/**
+	 * Erstellt bei neuen Datensätzen das Erstellungsdatum
+	 * @param mixed
+	 * @param \DataContainer
+	 * @return string
+	 * @throws \Exception
+	 */
+	public function saveNewRecordTime(DataContainer $dc)
+	{
+		if(!$dc->activeRecord->createtime)
+		{
+			\Database::getInstance()->prepare("UPDATE tl_spielerregister SET createtime=? WHERE id=?")
+			                        ->execute(time(), $dc->id);
+		}
 	}
 
 
