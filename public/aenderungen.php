@@ -57,7 +57,11 @@ class Aenderungen
 			while($objPlayers->next())
 			{
 				$ausgabe .= '<li>';
-				$ausgabe .= '<b>'.$objPlayers->firstname1.' '.$objPlayers->surname1.'</b>';
+				$ausgabe .= '<b>'.$objPlayers->firstname1.' '.$objPlayers->surname1.'</b><br>';
+				$ausgabe .= '* '.\Samson\Helper::getDate($objPlayers->birthday).' in '.$objPlayers->birthplace.'<br>';
+				if($objPlayers->death) $ausgabe .= '&dagger; '.\Samson\Helper::getDate($objPlayers->deathday).' in '.$objPlayers->deathplace.'<br>';
+				$ausgabe .= 'Zeitgeschichtliche Bedeutung (1 gering - 10 hoch): <b>'.$objPlayers->importance.'</b><br>';
+				$ausgabe .= '<i>'.$objPlayers->shortinfo.'</i>';
 				$ausgabe .= '</li>';
 			}
 			$ausgabe .= '</ul>';

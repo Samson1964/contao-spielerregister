@@ -92,6 +92,17 @@ $GLOBALS["TL_LANG"]["tl_spielerregister"]["star_legend"] = "Bedeutung";
 $GLOBALS["TL_LANG"]["tl_spielerregister"]["importance"][0] = "Zeitgeschichtliche Bedeutung";
 $GLOBALS["TL_LANG"]["tl_spielerregister"]["importance"][1] = "10 = sehr hoch, 1 = niedrig";
 
+$GLOBALS["TL_LANG"]["tl_spielerregister"]["fide_legend"] = "FIDE-Titel";
+
+$GLOBALS["TL_LANG"]["tl_spielerregister"]["gm_title"] = array('GM', 'Person hat den GM-Titel');
+$GLOBALS["TL_LANG"]["tl_spielerregister"]["gm_date"] = array('Datum', 'Verleihungsdatum des GM-Titels');
+$GLOBALS["TL_LANG"]["tl_spielerregister"]["im_title"] = array('IM', 'Person hat den IM-Titel');
+$GLOBALS["TL_LANG"]["tl_spielerregister"]["im_date"] = array('Datum', 'Verleihungsdatum des IM-Titels');
+$GLOBALS["TL_LANG"]["tl_spielerregister"]["wgm_title"] = array('WGM', 'Person hat den WGM-Titel');
+$GLOBALS["TL_LANG"]["tl_spielerregister"]["wgm_date"] = array('Datum', 'Verleihungsdatum des WGM-Titels');
+$GLOBALS["TL_LANG"]["tl_spielerregister"]["wim_title"] = array('WIM', 'Person hat den WIM-Titel');
+$GLOBALS["TL_LANG"]["tl_spielerregister"]["wim_date"] = array('Datum', 'Verleihungsdatum des WIM-Titels');
+
 $GLOBALS["TL_LANG"]["tl_spielerregister"]["dsb_legend"] = "DSB-Auszeichnungen";
 
 $GLOBALS["TL_LANG"]["tl_spielerregister"]["honorpresident"][0] = "Ehrenpräsident";

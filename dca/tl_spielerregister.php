@@ -138,7 +138,7 @@ $GLOBALS['TL_DCA']['tl_spielerregister'] = array
 	'palettes' => array
 	(
 		'__selector__'                => array('death'),
-		'default'                     => 'infobox;{namen_legend},surname1,firstname1,title,alias;{namen2_legend:hide},surname2,firstname2,surname3,firstname3,surname4,firstname4;{live_legend},birthday,birthplace,birthday_alt,death;{photos_legend:hide},multiSRC;{info_legend:hide},shortinfo,longinfo;{link_legend:hide},wikipedia,fide_id,dewis_id,chessgames_id,chess365_id,chess_id,homepage;{star_legend},importance;{dsb_legend},honorpresident,honormember,honorgoldpin,honorsilverpin,honorgoldbadge,honorsilverbadge,honorletter,honorplate,honormedal;{images_legend:hide};{intern_legend:hide},intern;{active_legend},nohighlighting,active'
+		'default'                     => 'infobox;{namen_legend},surname1,firstname1,title,alias;{namen2_legend:hide},surname2,firstname2,surname3,firstname3,surname4,firstname4;{live_legend},birthday,birthplace,birthday_alt,death;{photos_legend:hide},multiSRC;{info_legend:hide},shortinfo,longinfo;{link_legend:hide},wikipedia,fide_id,dewis_id,chessgames_id,chess365_id,chess_id,homepage;{star_legend},importance;{fide_legend},gm_title,gm_date,im_title,im_date,wgm_title,wgm_date,wim_title,wim_date;{dsb_legend},honorpresident,honormember,honorgoldpin,honorsilverpin,honorgoldbadge,honorsilverbadge,honorletter,honorplate,honormedal;{images_legend:hide};{intern_legend:hide},intern;{active_legend},nohighlighting,active'
 	),
 
 	// Subpalettes
@@ -494,6 +494,146 @@ $GLOBALS['TL_DCA']['tl_spielerregister'] = array
 			'reference'               => &$GLOBALS['TL_LANG']['tl_spielerregister'],
 			'sql'                     => "char(2) NOT NULL default '5'"
 		), 
+		// Person hat GM-Titel der FIDE
+		'gm_title' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_spielerregister']['gm_title'],
+			'inputType'               => 'checkbox',
+			'default'                 => '',
+			'filter'                  => true,
+			'eval'                    => array('tl_class' => 'w50','isBoolean' => true),
+			'sql'                     => "char(1) NOT NULL default ''"
+		),
+		// Datum des GM-Titels
+		'gm_date' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_spielerregister']['gm_date'],
+			'exclude'                 => true,
+			'search'                  => true,
+			'sorting'                 => true,
+			'flag'                    => 11,
+			'inputType'               => 'text',
+			'eval'                    => array
+			(
+				'maxlength'           => 10,
+				'tl_class'            => 'w50',
+				'rgxp'                => 'alnum'
+			),
+			'load_callback'           => array
+			(
+				array('\Samson\Helper', 'getDate')
+			),
+			'save_callback' => array
+			(
+				array('\Samson\Helper', 'putDate')
+			),
+			'sql'                     => "int(8) unsigned NOT NULL default '0'"
+		),
+		// Person hat IM-Titel der FIDE
+		'im_title' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_spielerregister']['im_title'],
+			'inputType'               => 'checkbox',
+			'default'                 => '',
+			'filter'                  => true,
+			'eval'                    => array('tl_class' => 'w50','isBoolean' => true),
+			'sql'                     => "char(1) NOT NULL default ''"
+		),
+		// Datum des IM-Titels
+		'im_date' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_spielerregister']['im_date'],
+			'exclude'                 => true,
+			'search'                  => true,
+			'sorting'                 => true,
+			'flag'                    => 11,
+			'inputType'               => 'text',
+			'eval'                    => array
+			(
+				'maxlength'           => 10,
+				'tl_class'            => 'w50',
+				'rgxp'                => 'alnum'
+			),
+			'load_callback'           => array
+			(
+				array('\Samson\Helper', 'getDate')
+			),
+			'save_callback' => array
+			(
+				array('\Samson\Helper', 'putDate')
+			),
+			'sql'                     => "int(8) unsigned NOT NULL default '0'"
+		),
+		// Person hat WGM-Titel der FIDE
+		'wgm_title' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_spielerregister']['wgm_title'],
+			'inputType'               => 'checkbox',
+			'default'                 => '',
+			'filter'                  => true,
+			'eval'                    => array('tl_class' => 'w50','isBoolean' => true),
+			'sql'                     => "char(1) NOT NULL default ''"
+		),
+		// Datum des WGM-Titels
+		'wgm_date' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_spielerregister']['wgm_date'],
+			'exclude'                 => true,
+			'search'                  => true,
+			'sorting'                 => true,
+			'flag'                    => 11,
+			'inputType'               => 'text',
+			'eval'                    => array
+			(
+				'maxlength'           => 10,
+				'tl_class'            => 'w50',
+				'rgxp'                => 'alnum'
+			),
+			'load_callback'           => array
+			(
+				array('\Samson\Helper', 'getDate')
+			),
+			'save_callback' => array
+			(
+				array('\Samson\Helper', 'putDate')
+			),
+			'sql'                     => "int(8) unsigned NOT NULL default '0'"
+		),
+		// Person hat WIM-Titel der FIDE
+		'wim_title' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_spielerregister']['wim_title'],
+			'inputType'               => 'checkbox',
+			'default'                 => '',
+			'filter'                  => true,
+			'eval'                    => array('tl_class' => 'w50','isBoolean' => true),
+			'sql'                     => "char(1) NOT NULL default ''"
+		),
+		// Datum des WIM-Titels
+		'wim_date' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_spielerregister']['wim_date'],
+			'exclude'                 => true,
+			'search'                  => true,
+			'sorting'                 => true,
+			'flag'                    => 11,
+			'inputType'               => 'text',
+			'eval'                    => array
+			(
+				'maxlength'           => 10,
+				'tl_class'            => 'w50',
+				'rgxp'                => 'alnum'
+			),
+			'load_callback'           => array
+			(
+				array('\Samson\Helper', 'getDate')
+			),
+			'save_callback' => array
+			(
+				array('\Samson\Helper', 'putDate')
+			),
+			'sql'                     => "int(8) unsigned NOT NULL default '0'"
+		),
 		// Ehrenpräsident im Jahr xxxx
 		'honorpresident' => array
 		(
