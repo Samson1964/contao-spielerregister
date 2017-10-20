@@ -130,7 +130,6 @@ class Ehrungsliste
 			(
 				'Ullrich Krause <praesident@schachbund.de>',
 				'Uwe Bönsch <sportdirektor@schachbund.de>',
-				'Ralf Chadt-Rausch <r-chadt@t-online.de>',
 				'DSB-Presse <presse@schachbund.de>'
 			)); 
 			$objEmail->sendTo(array('Frank Hoppe <webmaster@schachbund.de>')); 
