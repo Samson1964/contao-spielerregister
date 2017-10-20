@@ -23,7 +23,8 @@ ClassLoader::addClasses(array
 	'Yearday'               => 'system/modules/spielerregister/classes/Yearday.php',
 	'ExportSpielerregister' => 'system/modules/spielerregister/classes/Export.php',
 	'HonorList'             => 'system/modules/spielerregister/classes/HonorList.php',
-	'DeathList'             => 'system/modules/spielerregister/classes/DeathList.php'
+	'DeathList'             => 'system/modules/spielerregister/classes/DeathList.php',
+	'TitleList'             => 'system/modules/spielerregister/classes/TitleList.php'
 ));
 
 
@@ -39,5 +40,6 @@ TemplateLoader::addFiles(array
 	'spielerregister_suche'         => 'system/modules/spielerregister/templates',
 	'spielerregister_honorlist'     => 'system/modules/spielerregister/templates',
 	'spielerregister_deathlist'     => 'system/modules/spielerregister/templates',
+	'spielerregister_titlelist'     => 'system/modules/spielerregister/templates',
 	'spielerregister_infobox'       => 'system/modules/spielerregister/templates'
 ));

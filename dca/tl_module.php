@@ -17,6 +17,7 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['spielerregister_yearday'] = '{title
 $GLOBALS['TL_DCA']['tl_module']['palettes']['spielerregister_playerdetail'] = '{title_legend},name,type;{options_legend},spielerregister_jumpTo;{expert_legend:hide},cssID,align,space';
 $GLOBALS['TL_DCA']['tl_module']['palettes']['spielerregister_honorlist'] = '{title_legend},name,headline,type;{options_legend},spielerregister_honorListtype;{expert_legend:hide},cssID,align,space';
 $GLOBALS['TL_DCA']['tl_module']['palettes']['spielerregister_deathlist'] = '{title_legend},name,headline,type;{options_legend},spielerregister_deathlist_months;{expert_legend:hide},cssID,align,space';
+$GLOBALS['TL_DCA']['tl_module']['palettes']['spielerregister_titlelist'] = '{title_legend},name,headline,type;{options_legend},spielerregister_titlelist;{expert_legend:hide},cssID,align,space';
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['spielerregister_level'] = array
 (
@@ -101,3 +102,21 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['spielerregister_deathlist_months'] = 
 	),
 	'sql'                     => "int(2) unsigned NOT NULL default '12'"
 );
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['spielerregister_titlelist'] = array
+(
+	'label'            => &$GLOBALS['TL_LANG']['tl_module']['spielerregister_titlelist'],
+	'exclude'          => true,
+	'default'          => 'gm',
+	'inputType'        => 'select',
+	'options'          => array
+	(
+		'gm'           => 'Liste der Großmeister',
+		'im'           => 'Liste der Internationalen Meister',
+		'wg'           => 'Liste der Großmeisterinnen',
+		'wi'           => 'Liste der Internationalen Meisterinnen'
+	),
+	'eval'             => array('tl_class'=>'w50'),
+	'sql'              => "char(2) NOT NULL default ''"
+);
+

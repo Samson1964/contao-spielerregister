@@ -1,0 +1,28 @@
+<?php //$this->showTemplateVars(); ?>
+
+<div class="ce_table <?php echo $this->class; ?> block"<?php echo $this->cssID; ?><?php if ($this->style): ?> style="<?php echo $this->style; ?>"<?php endif; ?>>
+	
+	<?php if ($this->headline): ?>
+		<<?php echo $this->hl; ?>><?php echo $this->headline; ?></<?php echo $this->hl; ?>>
+	<?php endif; ?> 
+
+	<table>
+		<tr>
+			<th>Name</th>
+			<th>Geburtstag</th>
+			<th>Todestag</th>
+			<th>Titeldatum</th>
+			<th>Verleihungsalter</th>
+		</tr>
+	<?php foreach($this->data as $item): ?>
+		<tr>
+			<td><a href="person/player/<?= $item['id'] ?>.html"><?= $item['vorname'] ?> <?= $item['nachname']; ?></a><?php if($item['tot']) echo ' &dagger;'; ?></td>
+			<td><?= $item['geburtstag'] ?></td>
+			<td><?= $item['sterbetag'] ?></td>
+			<td><?= $item['titeldatum'] ?></td>
+			<td><?= $item['verleihungsalter'] ?></td>
+		</tr>
+	<?php endforeach; ?>
+	</table>
+	
+</div> 

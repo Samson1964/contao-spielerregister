@@ -1,5 +1,9 @@
 # DSB-Spielerregister Changelog
 
+## Version 1.3.1 (2017-10-20)
+
+- Add: Modul zur Ausgabe von FIDE-Titellisten
+
 ## Version 1.3.0 (2017-10-20)
 
 - Add: Erfassung von FIDE-Titel GM, IM; WGM, WIM eingebaut

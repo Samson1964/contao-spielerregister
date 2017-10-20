@@ -18,6 +18,7 @@ $GLOBALS['FE_MOD']['spielerregister'] = array
 	'spielerregister_yearday'      => 'Yearday',
 	'spielerregister_honorlist'    => 'HonorList',
 	'spielerregister_deathlist'    => 'DeathList',
+	'spielerregister_titlelist'    => 'TitleList',
 );  
 
 /**
