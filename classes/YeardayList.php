@@ -120,7 +120,7 @@ class YeardayList extends \Module
 					}
 					else $daten['bild'][$zaehler] = '';
 				}
-				$tag = 0+substr($objRegister->deathday,6,2);
+				$tag = 0 + (int)substr($objRegister->deathday,6,2);
 				if(($bisdatum[0] >= $von && $bisdatum[0] <= $bis && $tag) || ($bisdatum[1] >= $von && $bisdatum[1] <= $bis && $tag)) 
 				{
 					// Spieler merken
@@ -177,9 +177,9 @@ class YeardayList extends \Module
 	protected function DatumToString($datum) {
 
 		$temp = '';
-		$tag = substr($datum,6,2) + 0;
-		$monat = substr($datum,4,2) + 0;
-		$jahr = substr($datum,0,4) + 0;
+		$tag = (int)substr($datum,6,2) + 0;
+		$monat = (int)substr($datum,4,2) + 0;
+		$jahr = (int)substr($datum,0,4) + 0;
 
 		if($tag) $temp .= sprintf('%02d', $tag) . '.';
 		if($monat) $temp .= sprintf('%02d', $monat) . '.';

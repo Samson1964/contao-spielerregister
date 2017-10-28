@@ -178,9 +178,9 @@ class Yearday extends \Module
 	protected function DatumToString($datum) {
 
 		$temp = '';
-		$tag = substr($datum,6,2) + 0;
-		$monat = substr($datum,4,2) + 0;
-		$jahr = substr($datum,0,4) + 0;
+		$tag = (int)substr($datum,6,2) + 0;
+		$monat = (int)substr($datum,4,2) + 0;
+		$jahr = (int)substr($datum,0,4) + 0;
 
 		if($tag) $temp .= sprintf('%02d', $tag) . '.';
 		if($monat) $temp .= sprintf('%02d', $monat) . '.';

@@ -80,6 +80,7 @@ class TitleList extends \Module
 					case 'wg': $titeldatum = $objRegister->wgm_date; break;
 					case 'wi': $titeldatum = $objRegister->wim_date; break;
 				}
+				$objDatum = $this->Alter($objRegister->birthday, $titeldatum, true);
 				$output[] = array
 				(
 					'id'                => $objRegister->id,
@@ -88,10 +89,18 @@ class TitleList extends \Module
 					'geburtstag'        => $this->getDate($objRegister->birthday),
 					'sterbetag'         => $this->getDate($objRegister->deathday),
 					'titeldatum'        => $this->getDate($titeldatum),
-					'verleihungsalter'  => $this->Alter($objRegister->birthday, $titeldatum, true),
+					'verleihungsalter'  => $objDatum->y . " Jahr(e), " . $objDatum->m . " Monat(e), " . $objDatum->d . " Tag(e)",
+					'anzahlTage'        => $objDatum->days
 				);
 			}
 		}
+
+		$output = $this->sortArrayByFields(
+			$output,
+			array(
+				'anzahlTage' => array(SORT_ASC, SORT_NUMERIC)
+			)
+		);
 
 		$this->Template->data = $output;
 		
@@ -132,13 +141,14 @@ class TitleList extends \Module
 	 */
 	protected function Alter($start, $ende, $genau = false)
 	{
+		//echo "Start: $start | Ende: $ende<br>";
 		// Startdatum umwandeln
 		$laenge = strlen($start);
 		switch($laenge)
 		{
 			case 4: // JJJJ - dann Jahresmitte festlegen
 				$day = 30;
-				$month = 6;
+				$month = 1;
 				$year = $start;
 				break;
 			case 8: // JJJJMMTT
@@ -153,11 +163,14 @@ class TitleList extends \Module
 				break;
 			default: // anderer Wert
 		}
+		if($month == 0) $month = '06';
+		if($day == 0) $day = '01';
 		$startdatum = $day.'.'.$month.'.'.$year;
+		$startdatum = $year.'-'.$month.'-'.$day;
 
 		//echo "Start: $start | $day / $month / $year<br>";
 		// Startdatum prüfen
-		if(!checkdate($month, $day, $year)) return false;
+		//if(!checkdate($month, $day, $year)) return false;
 		//echo "Start: $start | $day / $month / $year<br>";
 
 		// Endedatum umwandeln
@@ -181,17 +194,24 @@ class TitleList extends \Module
 				break;
 			default: // anderer Wert
 		}
+		if($cur_month == 0) $cur_month = '06';
+		if($cur_day == 0) $cur_day = '01';
 		$endedatum = $cur_day.'.'.$cur_month.'.'.$cur_year;
+		$endedatum = $cur_year.'-'.$cur_month.'-'.$cur_day;
 
 		//echo "Ende: $ende | $cur_day / $cur_month / $cur_year<br>";
 		// Endedatum prüfen
-		if(!checkdate($cur_month, $cur_day, $cur_year)) return false;
+		//if(!checkdate($cur_month, $cur_day, $cur_year)) return false;
 		//echo "Ende: $ende | $cur_day / $cur_month / $cur_year<br>";
 
+		//echo "Startdatum: $startdatum | Endedatum: $endedatum<br>";
 		$date1 = new DateTime($startdatum);
 		$date2 = new DateTime($endedatum);
+		
+		//print_r($interval);
 		$interval = $date1->diff($date2);
-		return $interval->y . " Jahr(e), " . $interval->m . " Monat(e), " . $interval->d . " Tag(e)";
+		//print_r($interval);
+		return $interval;
 		
 		// Differenz in Jahren, Tagen und Monaten
 		echo "Differenz: " . $interval->y . " Jahr(e), " . $interval->m . " Monat(e), " . $interval->d . " Tag(e)<br>";
@@ -206,14 +226,34 @@ class TitleList extends \Module
 	
 	}
 
-	/**
-	 * Alter bei Verleihung des Titels ermitteln
-	 * @param mixed
-	 * @return mixed
-	 */
-	public function getVerleihalter($birthday, $titledate)
+	function sortArrayByFields($arr, $fields)
 	{
+		$sortFields = array();
+		$args       = array();
+		
+		foreach ($arr as $key => $row) {
+			foreach ($fields as $field => $order) {
+				$sortFields[$field][$key] = $row[$field];
+			}
+		}
+		
+		foreach ($fields as $field => $order) {
+			$args[] = $sortFields[$field];
+			
+			if (is_array($order)) {
+				foreach ($order as $pt) {
+					$args[$pt];
+				}
+			} else {
+				$args[] = $order;
+			}
+		}
+		
+		$args[] = &$arr;
+		
+		call_user_func_array('array_multisort', $args);
+		
+		return $arr;
 	}
-
 
 }

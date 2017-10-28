@@ -1,8 +1,9 @@
 # DSB-Spielerregister Changelog
 
-## Version 1.3.1 (2017-10-20)
+## Version 1.3.1 (2017-10-28)
 
 - Add: Modul zur Ausgabe von FIDE-Titellisten
+- Add: Kompatibilität mit PHP 7.1 hergestellt
 
 ## Version 1.3.0 (2017-10-20)
 
