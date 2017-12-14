@@ -897,36 +897,37 @@ class tl_spielerregister extends Backend
 https://community.contao.org/de/showthread.php?48275-DCA-Filter-erstellen-von-Child-Table
 */
 	
-    public function generateAdvancedFilter(DataContainer $dc)
-    {
-    
-        if (\Input::get('id') > 0) {
-            return '';
-        }
-
-        $session = \Session::getInstance()->getData();
-
-        // Filters
-        $arrFilters = array
-        (
-            'spr_filter'   => array
-            (
-                'name'    => 'spr_filter',
-                'label'   => $GLOBALS['TL_LANG']['tl_spielerregister']['filter_extended'],
-                'options' => array
+	public function generateAdvancedFilter(DataContainer $dc)
+	{
+	
+		if (\Input::get('id') > 0) {
+			return '';
+		}
+		
+		$session = \Session::getInstance()->getData();
+		
+		// Filters
+		$arrFilters = array
+		(
+			'spr_filter'   => array
+			(
+				'name'    => 'spr_filter',
+				'label'   => $GLOBALS['TL_LANG']['tl_spielerregister']['filter_extended'],
+				'options' => array
 				(
-					'1' => $GLOBALS['TL_LANG']['tl_spielerregister']['filter_over100'], 
-					'2' => $GLOBALS['TL_LANG']['tl_spielerregister']['filter_birthdayfail'],
-					'3' => $GLOBALS['TL_LANG']['tl_spielerregister']['filter_deathdayfail'],
-					'4' => $GLOBALS['TL_LANG']['tl_spielerregister']['filter_birthdayerror'],
-					'5' => $GLOBALS['TL_LANG']['tl_spielerregister']['filter_deathdayerror'],
-					'8' => $GLOBALS['TL_LANG']['tl_spielerregister']['filter_birthplacefail'],
-					'9' => $GLOBALS['TL_LANG']['tl_spielerregister']['filter_deathplacefail'],
-					'6' => $GLOBALS['TL_LANG']['tl_spielerregister']['filter_shortinfo'],
-					'7' => $GLOBALS['TL_LANG']['tl_spielerregister']['filter_firstnamefail'],
+					'10' => $GLOBALS['TL_LANG']['tl_spielerregister']['filter_roundbirthdays'],
+					'1'  => $GLOBALS['TL_LANG']['tl_spielerregister']['filter_over100'], 
+					'2'  => $GLOBALS['TL_LANG']['tl_spielerregister']['filter_birthdayfail'],
+					'3'  => $GLOBALS['TL_LANG']['tl_spielerregister']['filter_deathdayfail'],
+					'4'  => $GLOBALS['TL_LANG']['tl_spielerregister']['filter_birthdayerror'],
+					'5'  => $GLOBALS['TL_LANG']['tl_spielerregister']['filter_deathdayerror'],
+					'8'  => $GLOBALS['TL_LANG']['tl_spielerregister']['filter_birthplacefail'],
+					'9'  => $GLOBALS['TL_LANG']['tl_spielerregister']['filter_deathplacefail'],
+					'6'  => $GLOBALS['TL_LANG']['tl_spielerregister']['filter_shortinfo'],
+					'7'  => $GLOBALS['TL_LANG']['tl_spielerregister']['filter_firstnamefail'],
 				)
-            ),
-        );
+			),
+		);
 
         $strBuffer = '
 <div class="tl_filter spr_filter tl_subpanel">
@@ -945,101 +946,119 @@ https://community.contao.org/de/showthread.php?48275-DCA-Filter-erstellen-von-Ch
 
             $strBuffer .= '<select name="' . $arrFilter['name'] . '" id="' . $arrFilter['name'] . '" class="tl_select' . (isset($session['filter']['tl_registerFilter'][$arrFilter['name']]) ? ' active' : '') . '">
 ' . $strOptions . '
-</select>' . "\n";
-        }
+</select>' . "\n";	
+		}
 
-        return $strBuffer . '</div>'; 
+		return $strBuffer . '</div>'; 
 
-    }  
+	}
+
+	public function applyAdvancedFilter()
+	{
 	
-    public function applyAdvancedFilter()
-    {
-    
-        $session = $this->Session->getData();
-
-        // Store filter values in the session
-        foreach ($_POST as $k => $v) {
-            if (substr($k, 0, 4) != 'spr_') {
-                continue;
-            }
-
-            // Reset the filter
-            if ($k == \Input::post($k)) {
-                unset($session['filter']['tl_registerFilter'][$k]);
-            } // Apply the filter
-            else {
-                $session['filter']['tl_registerFilter'][$k] = \Input::post($k);
-            }
-        }
-
-        $this->Session->setData($session);
-
-        if (\Input::get('id') > 0 || !isset($session['filter']['tl_registerFilter'])) {
-            return;
-        }
-
-        $arrPlayers = null;
-
-
-        switch ($session['filter']['tl_registerFilter']['spr_filter']) {
-            case '1': // Älter als 100 Jahre, nicht verstorben
-                $hundertjahre = date("Ymd") - 1000000; // Aktuelles Datum minus 100 Jahre
+		$session = $this->Session->getData();
+		
+		// Store filter values in the session
+		foreach ($_POST as $k => $v) {
+			if (substr($k, 0, 4) != 'spr_') {
+				continue;
+			}
+			
+			// Reset the filter
+			if ($k == \Input::post($k)) {
+				unset($session['filter']['tl_registerFilter'][$k]);
+			} // Apply the filter
+			else {
+				$session['filter']['tl_registerFilter'][$k] = \Input::post($k);
+			}
+		}
+		
+		$this->Session->setData($session);
+		
+		if (\Input::get('id') > 0 || !isset($session['filter']['tl_registerFilter'])) {
+			return;
+		}
+		
+		$arrPlayers = null;
+		
+		
+		switch ($session['filter']['tl_registerFilter']['spr_filter']) {
+			case '1': // Älter als 100 Jahre, nicht verstorben
+				$hundertjahre = date("Ymd") - 1000000; // Aktuelles Datum minus 100 Jahre
 				$verstorben = false; // Nicht verstorben
 				$objPlayers = \Database::getInstance()->prepare("SELECT id FROM tl_spielerregister WHERE birthday <= ? AND birthday != 0 AND death = ?")
 													  ->execute($hundertjahre, $verstorben);
 				$arrPlayers = is_array($arrPlayers) ? array_intersect($arrPlayers, $objPlayers->fetchEach('id')) : $objPlayers->fetchEach('id');
 				break;
-            case '2': // Geburtsdatum fehlt
+			case '2': // Geburtsdatum fehlt
 				$objPlayers = \Database::getInstance()->prepare("SELECT id FROM tl_spielerregister WHERE birthday = 0")
 													  ->execute();
 				$arrPlayers = is_array($arrPlayers) ? array_intersect($arrPlayers, $objPlayers->fetchEach('id')) : $objPlayers->fetchEach('id');
-                break;
-            case '3': // Sterbedatum fehlt
+				break;
+			case '3': // Sterbedatum fehlt
 				$objPlayers = \Database::getInstance()->prepare("SELECT id FROM tl_spielerregister WHERE deathday = 0 AND death = '1'")
 													  ->execute();
 				$arrPlayers = is_array($arrPlayers) ? array_intersect($arrPlayers, $objPlayers->fetchEach('id')) : $objPlayers->fetchEach('id');
-                break;
-            case '4': // Geburtsdatum unvollständig
+				break;
+			case '4': // Geburtsdatum unvollständig
 				$objPlayers = \Database::getInstance()->prepare("SELECT id FROM tl_spielerregister WHERE birthday % 100 = 0 AND birthday != 0")
 													  ->execute();
 				$arrPlayers = is_array($arrPlayers) ? array_intersect($arrPlayers, $objPlayers->fetchEach('id')) : $objPlayers->fetchEach('id');
-                break;
-            case '5': // Sterbedatum unvollständig
+				break;
+			case '5': // Sterbedatum unvollständig
 				$objPlayers = \Database::getInstance()->prepare("SELECT id FROM tl_spielerregister WHERE deathday % 100 = 0 AND deathday != 0 AND death = '1'")
 													  ->execute();
 				$arrPlayers = is_array($arrPlayers) ? array_intersect($arrPlayers, $objPlayers->fetchEach('id')) : $objPlayers->fetchEach('id');
-                break;
-            case '6': // Kurzinfo fehlt
+				break;
+			case '6': // Kurzinfo fehlt
 				$objPlayers = \Database::getInstance()->prepare("SELECT id FROM tl_spielerregister WHERE shortinfo = ''")
 													  ->execute();
 				$arrPlayers = is_array($arrPlayers) ? array_intersect($arrPlayers, $objPlayers->fetchEach('id')) : $objPlayers->fetchEach('id');
-                break;
-            case '7': // Vorname fehlt
+				break;
+			case '7': // Vorname fehlt
 				$objPlayers = \Database::getInstance()->prepare("SELECT id FROM tl_spielerregister WHERE firstname1 = ''")
 													  ->execute();
 				$arrPlayers = is_array($arrPlayers) ? array_intersect($arrPlayers, $objPlayers->fetchEach('id')) : $objPlayers->fetchEach('id');
-                break;
-            case '8': // Geburtsort fehlt
+				break;
+			case '8': // Geburtsort fehlt
 				$objPlayers = \Database::getInstance()->prepare("SELECT id FROM tl_spielerregister WHERE birthplace = ''")
 													  ->execute();
 				$arrPlayers = is_array($arrPlayers) ? array_intersect($arrPlayers, $objPlayers->fetchEach('id')) : $objPlayers->fetchEach('id');
-                break;
-            case '9': // Sterbeort fehlt
+				break;
+			case '9': // Sterbeort fehlt
 				$objPlayers = \Database::getInstance()->prepare("SELECT id FROM tl_spielerregister WHERE deathplace = '' AND death = '1'")
 													  ->execute();
 				$arrPlayers = is_array($arrPlayers) ? array_intersect($arrPlayers, $objPlayers->fetchEach('id')) : $objPlayers->fetchEach('id');
-                break;
-
-            default:
-        }
-
-        if (is_array($arrPlayers) && empty($arrPlayers)) {
-            $arrPlayers = array(0);
-        }
-
-        $GLOBALS['TL_DCA']['tl_spielerregister']['list']['sorting']['root'] = $arrPlayers; 
-
-	}  
+				break;
+			case '10': // Runde Geburtstage von lebenden Personen im aktuellen Jahr (30,40,50,60,65,70,75,80,85,90,95,100)
+				$jahr = date("Y"); // Aktuelles Jahr
+				$jahr30 = $jahr - 30;
+				$jahr40 = $jahr - 40;
+				$jahr50 = $jahr - 50;
+				$jahr60 = $jahr - 60;
+				$jahr65 = $jahr - 65;
+				$jahr70 = $jahr - 70;
+				$jahr75 = $jahr - 75;
+				$jahr80 = $jahr - 80;
+				$jahr85 = $jahr - 85;
+				$jahr90 = $jahr - 90;
+				$jahr95 = $jahr - 95;
+				$jahr100 = $jahr - 100;
+				$objPlayers = \Database::getInstance()->prepare("SELECT id FROM tl_spielerregister WHERE (SUBSTR(birthday,1,4) = ? OR SUBSTR(birthday,1,4) = ? OR SUBSTR(birthday,1,4) = ? OR SUBSTR(birthday,1,4) = ? OR SUBSTR(birthday,1,4) = ? OR SUBSTR(birthday,1,4) = ? OR SUBSTR(birthday,1,4) = ? OR SUBSTR(birthday,1,4) = ? OR SUBSTR(birthday,1,4) = ? OR SUBSTR(birthday,1,4) = ? OR SUBSTR(birthday,1,4) = ? OR SUBSTR(birthday,1,4) = ?) AND death = ?")
+													  ->execute($jahr30, $jahr40, $jahr50, $jahr60, $jahr65, $jahr70, $jahr75, $jahr80, $jahr85, $jahr90, $jahr95, $jahr100, '');
+				$arrPlayers = is_array($arrPlayers) ? array_intersect($arrPlayers, $objPlayers->fetchEach('id')) : $objPlayers->fetchEach('id');
+				break;
+			
+			default:
+		}
+		
+		if (is_array($arrPlayers) && empty($arrPlayers)) {
+			$arrPlayers = array(0);
+		}
+		
+		$GLOBALS['TL_DCA']['tl_spielerregister']['list']['sorting']['root'] = $arrPlayers; 
+	
+	}
 	
 	/**
 	 * Ändert das Aussehen des Toggle-Buttons.

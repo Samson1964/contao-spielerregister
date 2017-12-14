@@ -186,6 +186,7 @@ $GLOBALS['TL_LANG']['tl_spielerregister']['show'][1] = "Details des Spielers %s 
 
 $GLOBALS['TL_LANG']['tl_spielerregister']['filter'] = "Spezialfilter";
 $GLOBALS['TL_LANG']['tl_spielerregister']['filter_extended'] = "Spezialfilter";
+$GLOBALS['TL_LANG']['tl_spielerregister']['filter_roundbirthdays'] = "Runde Geburtstage (30,40,50,60,65,70,75,80,85,90,95,100)";
 $GLOBALS['TL_LANG']['tl_spielerregister']['filter_over100'] = "Älter als 100 Jahre, nicht verstorben";
 $GLOBALS['TL_LANG']['tl_spielerregister']['filter_birthdayfail'] = "Geburtsdatum fehlt";
 $GLOBALS['TL_LANG']['tl_spielerregister']['filter_deathdayfail'] = "Sterbedatum fehlt";

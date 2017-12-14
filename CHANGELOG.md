@@ -1,9 +1,13 @@
 # DSB-Spielerregister Changelog
 
+## Version 1.3.2 (2017-12-14)
+
+- Add: Spezialfilter f√ºr runde Geburtstage im lfd. Jahr (nur lebende Personen)
+
 ## Version 1.3.1 (2017-10-28)
 
 - Add: Modul zur Ausgabe von FIDE-Titellisten
-- Add: Kompatibilit‰t mit PHP 7.1 hergestellt
+- Add: Kompatibilit√§t mit PHP 7.1 hergestellt
 
 ## Version 1.3.0 (2017-10-20)
 
@@ -11,7 +15,7 @@
 
 ## Version 1.2.0 (2017-10-03)
 
-- Add: E-Mail-Export f¸r Newsletter: Zuletzt neu eingetragene Datens‰tze
+- Add: E-Mail-Export f√ºr Newsletter: Zuletzt neu eingetragene Datens√§tze
 - Fix: Erstellungsdatum wurde nicht gespeichert
 
 ## Version 1.1.0 (2016-07-29)
