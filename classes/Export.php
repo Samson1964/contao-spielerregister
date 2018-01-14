@@ -12,6 +12,11 @@
  */
 
 /**
+ * Benutzerdefinierten Namespace festlegen, damit die Klasse ersetzt werden kann
+ */
+namespace Samson\Playerbase;
+
+/**
  * Class CounterRegister
  *
  * @copyright  Frank Hoppe 2014

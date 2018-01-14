@@ -7,27 +7,18 @@
  */
 
 /**
- * Backend-Modul Übersetzungen
+ * Backend-Modul Ãœbersetzungen
  */
-$GLOBALS["TL_LANG"]["MOD"]["spielerregister"][0] = "Spielerregister";
-$GLOBALS["TL_LANG"]["MOD"]["spielerregister"][1] = "DSB-Spielerregister";
+$GLOBALS['TL_LANG']['MOD']['spielerregister'] = array('Spielerregister', 'DSB-Spielerregister');
 
 /**
  * Frontendmodule
  */
 $GLOBALS['TL_LANG']['FMD']['spielerregister'] = 'Spielerregister';
 
-$GLOBALS['TL_LANG']['FMD']['spielerregister_playerdetail'][0] = 'Spielerdetails';
-$GLOBALS['TL_LANG']['FMD']['spielerregister_playerdetail'][1] = 'Spielerdetails anzeigen';
-
-$GLOBALS['TL_LANG']['FMD']['spielerregister_yeardaylist'][0] = 'Jahrestagliste';
-$GLOBALS['TL_LANG']['FMD']['spielerregister_yeardaylist'][1] = 'Jahrestagliste anzeigen';
-
-$GLOBALS['TL_LANG']['FMD']['spielerregister_yearday'][0] = 'Aktueller Jahrestag';
-$GLOBALS['TL_LANG']['FMD']['spielerregister_yearday'][1] = 'Aktuellen Jahrestag anzeigen';
-
-$GLOBALS['TL_LANG']['FMD']['spielerregister_honorlist'][0] = 'Ehrungslisten';
-$GLOBALS['TL_LANG']['FMD']['spielerregister_honorlist'][1] = 'Ehrungslisten anzeigen';
-
-$GLOBALS['TL_LANG']['FMD']['spielerregister_deathlist'][0] = 'Sterbeliste';
-$GLOBALS['TL_LANG']['FMD']['spielerregister_deathlist'][1] = 'Sterbeliste anzeigen';
+$GLOBALS['TL_LANG']['FMD']['spielerregister_playerdetail'] = array('Spielerdetails', 'Spielerdetails anzeigen');
+$GLOBALS['TL_LANG']['FMD']['spielerregister_yeardaylist'] = array('Jahrestagliste', 'Jahrestagliste anzeigen');
+$GLOBALS['TL_LANG']['FMD']['spielerregister_yearday'] = array('Aktueller Jahrestag', 'Aktuellen Jahrestag anzeigen');
+$GLOBALS['TL_LANG']['FMD']['spielerregister_honorlist'] = array('Ehrungslisten', 'Ehrungslisten anzeigen');
+$GLOBALS['TL_LANG']['FMD']['spielerregister_deathlist'] = array('Sterbeliste', 'Sterbeliste anzeigen');
+$GLOBALS['TL_LANG']['FMD']['spielerregister_titlelist'] = array('FIDE-Titelliste', 'FIDE-Titelliste anzeigen');

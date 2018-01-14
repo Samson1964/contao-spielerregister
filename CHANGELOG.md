@@ -1,5 +1,10 @@
 # DSB-Spielerregister Changelog
 
+## Version 1.4.0 (2018-01-14)
+
+- Add: Namespaces
+- Add: Helper-Modul für Register-Abfrage
+
 ## Version 1.3.2 (2017-12-14)
 
 - Add: Spezialfilter für runde Geburtstage im lfd. Jahr (nur lebende Personen)

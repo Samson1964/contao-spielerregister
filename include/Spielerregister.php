@@ -10,6 +10,11 @@
  * @license http://www.gnu.org/licenses/lgpl-3.0.html LGPL
  */
 
+/**
+ * Benutzerdefinierten Namespace festlegen, damit die Klasse ersetzt werden kann
+ */
+namespace Samson\Playerbase;
+
 class Spielerregister 
 {
 

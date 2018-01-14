@@ -12,6 +12,11 @@
  */
 
 /**
+ * Benutzerdefinierten Namespace festlegen, damit die Klasse ersetzt werden kann
+ */
+namespace Samson\Playerbase;
+
+/**
  * Class CounterRegister
  *
  * @copyright  Frank Hoppe 2014
@@ -205,8 +210,8 @@ class TitleList extends \Module
 		//echo "Ende: $ende | $cur_day / $cur_month / $cur_year<br>";
 
 		//echo "Startdatum: $startdatum | Endedatum: $endedatum<br>";
-		$date1 = new DateTime($startdatum);
-		$date2 = new DateTime($endedatum);
+		$date1 = new \DateTime($startdatum);
+		$date2 = new \DateTime($endedatum);
 		
 		//print_r($interval);
 		$interval = $date1->diff($date2);

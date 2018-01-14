@@ -13,12 +13,12 @@
 
 $GLOBALS['FE_MOD']['spielerregister'] = array
 (
-	'spielerregister_playerdetail' => 'PlayerDetail',
-	'spielerregister_yeardaylist'  => 'YeardayList',
-	'spielerregister_yearday'      => 'Yearday',
-	'spielerregister_honorlist'    => 'HonorList',
-	'spielerregister_deathlist'    => 'DeathList',
-	'spielerregister_titlelist'    => 'TitleList',
+	'spielerregister_playerdetail' => 'Samson\Playerbase\PlayerDetail',
+	'spielerregister_yeardaylist'  => 'Samson\Playerbase\YeardayList',
+	'spielerregister_yearday'      => 'Samson\Playerbase\Yearday',
+	'spielerregister_honorlist'    => 'Samson\Playerbase\HonorList',
+	'spielerregister_deathlist'    => 'Samson\Playerbase\DeathList',
+	'spielerregister_titlelist'    => 'Samson\Playerbase\TitleList',
 );  
 
 /**
