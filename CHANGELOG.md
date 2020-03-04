@@ -1,5 +1,9 @@
 # DSB-Spielerregister Changelog
 
+## Version 1.5.0 (2019-07-22)
+
+- Change: Newsletter-Mails Jahrestage werden jetzt einzeln versandt (22.07.2019 jahrestage.php umgebaut)
+
 ## Version 1.4.0 (2018-01-14)
 
 - Add: Namespaces

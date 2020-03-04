@@ -36,7 +36,7 @@ if(!$GLOBALS['BE_MOD']['dsb'])
  * Inserttag für Registerersetzung in den Hooks anmelden
  */
 
-$GLOBALS['TL_HOOKS']['replaceInsertTags'][] = array('Spielerregister','ReplacePlayer');
+$GLOBALS['TL_HOOKS']['replaceInsertTags'][] = array('Samson\Playerbase\Spielerregister','ReplacePlayer');
 
 
 $GLOBALS['BE_MOD']['dsb']['spielerregister'] = array

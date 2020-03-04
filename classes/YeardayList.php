@@ -120,7 +120,7 @@ class YeardayList extends \Module
 					if($objImage->numRows)
 					{
 						$objFile = \FilesModel::findByPk($objImage->singleSRC);
-						$thumbnail = Image::get($objFile->path, 120, 120, 'proportional'); 
+						$thumbnail = \Image::get($objFile->path, 120, 120, 'proportional'); 
 						$daten['bild'][$zaehler] = $thumbnail;
 					}
 					else $daten['bild'][$zaehler] = '';
@@ -151,7 +151,7 @@ class YeardayList extends \Module
 					if($objImage->numRows)
 					{
 						$objFile = \FilesModel::findByPk($objImage->singleSRC);
-						$thumbnail = Image::get($objFile->path, 120, 120, 'proportional'); 
+						$thumbnail = \Image::get($objFile->path, 120, 120, 'proportional'); 
 						$daten['bild'][$zaehler] = $thumbnail;
 					}
 					else $daten['bild'][$zaehler] = '';

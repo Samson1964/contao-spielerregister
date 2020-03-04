@@ -26,6 +26,7 @@ use Contao\Controller;
  * Initialize the system
  */
 define('TL_MODE', 'FE');
+define('TL_SCRIPT', 'system/modules/spielerregister/public/jahrestage.php');
 // ER2 / ER3 (dev over symlink)
 if(file_exists('../../../initialize.php')) require('../../../initialize.php');
 else require('../../../../../system/initialize.php');
@@ -133,30 +134,39 @@ class Jahrestage
 		
 		if($content)
 		{
-			// Newsletter-Empfänger laden
-			$bcc = array();
-			$objNewsletter = \Database::getInstance()
-				->prepare("SELECT email FROM tl_newsletter_recipients WHERE active = 1 AND pid = 8")
-				->execute();
-			if($objNewsletter->numRows) 
-			{
-				while($objNewsletter->next())
-				{
-					$bcc[] = $objNewsletter->email;
-				}
-			}
+			// Inserttags ersetzen und Inhalt einfügen
+			$content = \Controller::replaceInsertTags($content);
+			$content = str_replace('app.php','https://www.schachbund.de',$content);
 			$content = '<h1>Jahrestagsnewsletter des Deutschen Schachbundes</h1><p>Folgende Jahrestage stehen an:</p>' . $content;
 			$content .= '<p><i>DIESE E-MAIL WURDE AUTOMATISCH GENERIERT!</i></p><p>Wenn Sie Korrekturen oder Ergänzungen für uns haben, dann antworten Sie einfach auf diese E-Mail!</p>';
-			$content .= '<p><a href="http://www.schachbund.de/persoenlichkeiten.html">Nächste Jahrestage</a> (komplett mit Fotos) | <a href="http://www.schachbund.de/gedenktafel.html">Unsere Gedenktafel</a> (Sterbefälle letzte 12 Monate)</p>';
-			$content .= '<p><a href="http://www.schachbund.de/persoenlichkeiten-newsletter.html">Newsletter kündigen</a></p>';
-			// Email versenden, wenn Jahrestage anstehen
+			$content .= '<p><a href="https://www.schachbund.de/persoenlichkeiten.html">Nächste Jahrestage</a> (komplett mit Fotos) | <a href="https://www.schachbund.de/gedenktafel.html">Unsere Gedenktafel</a> (Sterbefälle letzte 15 Monate) | ';
+			$content .= '<a href="https://www.schachbund.de/persoenlichkeiten-newsletter-kuendigen.html?email=##email##">Newsletter kündigen</a></p>';
+
+			// Newsletter an Admin schicken
+			$text = str_replace('##email##', 'webmaster@schachbund.de', $content);
 			$objEmail = new \Email();
 			$objEmail->from = 'webmaster@schachbund.de';
 			$objEmail->fromName = 'DSB-Jahrestage';
-			$objEmail->subject = '[DSB-Webinfo] Jahrestage Spielerregister';
-			$objEmail->html = $content;
-			if($bcc) $objEmail->sendBcc($bcc);
+			$objEmail->subject = '[DSB-Historyletter] Jahrestage Spielerregister';
+			$objEmail->html = $text;
 			$objEmail->sendTo(array('Frank Hoppe <webmaster@schachbund.de>')); 
+
+			// Newsletter-Empfänger laden und Mail versenden
+			$objNewsletter = \Database::getInstance()->prepare("SELECT email FROM tl_newsletter_recipients WHERE active = 1 AND pid = 8")
+			                                         ->execute();
+			if($objNewsletter->numRows)
+			{
+				while($objNewsletter->next())
+				{
+					$text = str_replace('##email##', $objNewsletter->email, $content);
+					$objEmail = new \Email();
+					$objEmail->from = 'webmaster@schachbund.de';
+					$objEmail->fromName = 'DSB-Jahrestage';
+					$objEmail->subject = '[DSB-Historyletter] Jahrestage Spielerregister';
+					$objEmail->html = $text;
+					$objEmail->sendTo(array($objNewsletter->email)); 
+				}
+			}
 		}
 	}
 

@@ -188,12 +188,12 @@ class PlayerDetail extends \Module
 							'alt'       => '',
 							'imageUrl'  => '',
 							'caption'   => $caption,
-							'thumb'     => Image::get($objFile->path, 180, 180, 'center_center')
+							'thumb'     => \Image::get($objFile->path, 180, 180, 'center_center')
 						);
 					}
 					$objFile = \FilesModel::findByPk($objImage->singleSRC);
 					$this->Template->bildoriginal = $objFile->path; 
-					$this->Template->bildvorschau = Image::get($objFile->path, 180, 180, 'center_center'); 
+					$this->Template->bildvorschau = \Image::get($objFile->path, 180, 180, 'center_center'); 
 					$temp = getimagesize($this->Template->bildvorschau); 
 					$this->Template->bildbreite = $temp[0]; 
 					$this->Template->bildjahr = $objImage->year; 
@@ -255,9 +255,9 @@ class PlayerDetail extends \Module
 	protected function DatumToString($datum) {
 
 		$temp = '';
-		$tag = substr($datum,6,2) + 0;
-		$monat = substr($datum,4,2) + 0;
-		$jahr = substr($datum,0,4) + 0;
+		$tag = (int)substr($datum,6,2) + 0;
+		$monat = (int)substr($datum,4,2) + 0;
+		$jahr = (int)substr($datum,0,4) + 0;
 
 		if($tag) $temp .= sprintf('%02d', $tag) . '.';
 		if($monat) $temp .= sprintf('%02d', $monat) . '.';

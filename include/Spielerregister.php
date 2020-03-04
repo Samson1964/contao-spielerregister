@@ -83,7 +83,7 @@ class Spielerregister
 					'alt'       => $arrMeta['title'],
 					'imageUrl'  => $arrMeta['link'],
 					'caption'   => \Samson\Helper::replaceCopyright($arrMeta['caption']),
-					'thumb'     => Image::get($objFiles->path, 180, 180, 'center_center')
+					'thumb'     => \Image::get($objFiles->path, 180, 180, 'center_center')
 				);
 
 				$auxDate[] = $objFile->mtime;
